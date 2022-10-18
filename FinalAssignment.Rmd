@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # Part A - Data Science Questions (12 marks)
 
 
-Q1. (3 marks) From your understanding of ethical data science, mention three principles of a code of ethics that any data scientist should consider.
+<b>Q1. (3 marks) From your understanding of ethical data science, mention three principles of a code of ethics that any data scientist should consider.</b>
 
 
 
@@ -25,7 +25,7 @@ P3:It is important to remember that we remain a member of the society and it is 
 
 
 
-Q2.3 marks) To build a visualisation using the ggplot2 library, we use the following template:
+<b>Q2.3 marks) To build a visualisation using the ggplot2 library, we use the following template:</b>
 
  ggplot(data= [dataset], mapping = aes(x = [x-variable], y = [y-variable]))+
   geom_xxx() +
@@ -34,7 +34,7 @@ Based on the above template, mention the main components of building a graph usi
 
 
 There are 3 main components here:
-a) the dataset which needs to be displayed. It has to be contained in a data frame/tibble and has to include the x-variable which comes on the x-axis and which is the independent/explanatory variable. It has to also include the y-variable which is the dependent/response variable which changes as x changes and is plotted on the y-axis
+  a) the dataset which needs to be displayed. It has to be contained in a data frame/tibble and has to include the x-variable which comes on the x-axis and which is the independent/explanatory variable. It has to also include the y-variable which is the dependent/response variable which changes as x changes and is plotted on the y-axis
 
 b)aesthetics, introduced by the function aes() that takes care of positioning/mapping the variables on the plot.It also includes other elements like color where we can specify if the plot needs to be colored as per a specific group or a specific color. It can include specification for alpha which shows the transparency of plot. It can also contain specification for linetype, size,shape,etc.
 
@@ -43,7 +43,7 @@ c)geometry, introduced by the function geom() that takes care of drawing the gra
 
 
 
-Q3. (3 marks) Describe three properties of the correlation coefficient of two variables
+<b>Q3. (3 marks) Describe three properties of the correlation coefficient of two variables</b>
 
 
 1.  The Magnitude of the correlation coefficient(R) represents the strength of the relationship. It ranges between -1 and +1.
@@ -56,7 +56,7 @@ Q3. (3 marks) Describe three properties of the correlation coefficient of two va
 
 
 
-Q4. (3 marks) Imagine we have a dataset that lists the heights of the fathers and their sons. You have built a linear model that encodes the relationship between the fathers’ heights and the sons’ heights as follows:
+<b>Q4. (3 marks) Imagine we have a dataset that lists the heights of the fathers and their sons. You have built a linear model that encodes the relationship between the fathers’ heights and the sons’ heights as follows:</b>
 
 lm(son ~ father, data = heights_data)
 
