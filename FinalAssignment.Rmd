@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Part A - Data Science Questions (12 marks)
-There are four questions in this part, with differing marks. All answers must be recorded in an Rmarkdown file then exported to PDF/HTML file.
+
 
 Q1. (3 marks) From your understanding of ethical data science, mention three principles of a code of ethics that any data scientist should consider.
 
