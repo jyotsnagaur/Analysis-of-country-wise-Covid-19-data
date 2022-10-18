@@ -50,7 +50,7 @@ Q3. (3 marks) Describe three properties of the correlation coefficient of two va
 
 2.  Direction of the relationship: This is indicated by the sign of the correlation coefficient. A positive R represents an increasing trend in the graph where the y-variable increases with increase in x-variable. A negative R represents a decreasing trend where y-variable decreases with increase in x-variable.
 
-3.  The correlation coefficient is unit-less. The value will stay very similiar even with scaling or normalising any of the variables. The coeeficient between x and y is same as the correlation coefficient between y and x. 
+3.  The correlation coefficient is unit-less. The value will stay very similar even with scaling or normalising any of the variables. The coefficient between x and y is same as the correlation coefficient between y and x. 
 
 
 
@@ -68,14 +68,12 @@ Coefficients:
 70.45       0.50  
 The estimated coefficient (i.e. intercept and slope), which describes the relationship between the fathers’ and sons’ heights can be interpreted as:
 
-Write your answer as:
-_____________________________________________________________________
-_____________________________________________________________________
-_____________________________________________________________________
-_____________________________________________________________________
-_____________________________________________________________________
 
-
+ a) The intercept is the minimum or maximum value that can be achieved when the explanatory variable equals 0. Here the explanatory variable is the father's height and the response variable is the son's height. The intercept 70.45 units here can be interpreted as the constant difference that the father's and son's height will have, apart from their linear relationship. At any given father's height, the son's height is bound to be atleast 70.45 units more than the height of the father. In simple words, all sons in the dataset are taller than their father.
+ 
+ b) The slope quantifies the effect of explanatory variable(father's height) on the response variable(son's height). Here the slope measures: for each unit increase in the father's height, how much would the height of the son would increase. Here since the slope is 0.5, it means that for each 2 units increase in the height of the father, the height of the son increases by 1 unit.
+ 
+ 
 # --------------------------------------------------------------------------------- #
 
 # Part B: Data Preparation, exploring and modelling (78 marks)
