@@ -25,18 +25,18 @@ P3:It is important to remember that we remain a member of the society and it is 
 
 <b>Q2.To build a visualisation using the ggplot2 library, we use the following template:</b>
 
- ggplot(data= [dataset], mapping = aes(x = [x-variable], y = [y-variable]))+
-  geom_xxx() +
-  other options 
+ggplot(data= [dataset], mapping = aes(x = [x-variable], y = [y-variable]))+
+geom_xxx() +
+other options 
 Based on the above template, mention the main components of building a graph using ggplot2 and describe the meaning of each of these components.
 
 
 There are 3 main components here:
 
 a) the dataset which needs to be displayed. It has to be contained in a data frame/tibble and has to include the x-variable which comes on the x-axis and which is the independent/explanatory variable. It has to also include the y-variable which is the dependent/response variable which changes as x changes and is plotted on the y-axis
-  
+
 b) aesthetics, introduced by the function aes() that takes care of positioning/mapping the variables on the plot.It also includes other elements like color where we can specify if the plot needs to be colored as per a specific group or a specific color. It can include specification for alpha which shows the transparency of plot. It can also contain specification for linetype, size,shape,etc.
-  
+
 c) geometry, introduced by the function geom() that takes care of drawing the graph (bar graph, line, scatter plot, etc). There can be different geometries like horizontal,vertical,diagonal lines, barplot,contour,density plots,point,boxplot,jitter,polygon etc.All of these geometries can be plotted using their respective codes starting with geom_.
 
 
@@ -67,11 +67,11 @@ Coefficients:
 The estimated coefficient (i.e. intercept and slope), which describes the relationship between the fathers’ and sons’ heights can be interpreted as:
 
 
- a) The intercept is the minimum or maximum value that can be achieved when the explanatory variable equals 0. Here the explanatory variable is the father's height and the response variable is the son's height. The intercept 70.45 units here can be interpreted as the constant difference that the father's and son's height will have, apart from their linear relationship. At any given father's height, the son's height is bound to be atleast 70.45 units more than the height of the father. In simple words, all sons in the dataset are taller than their father.
- 
- b) The slope quantifies the effect of explanatory variable(father's height) on the response variable(son's height). Here the slope measures: for each unit increase in the father's height, how much would the height of the son would increase. Here since the slope is 0.5, it means that for each 2 units increase in the height of the father, the height of the son increases by 1 unit.
- 
- 
+a) The intercept is the minimum or maximum value that can be achieved when the explanatory variable equals 0. Here the explanatory variable is the father's height and the response variable is the son's height. The intercept 70.45 units here can be interpreted as the constant difference that the father's and son's height will have, apart from their linear relationship. At any given father's height, the son's height is bound to be atleast 70.45 units more than the height of the father. In simple words, all sons in the dataset are taller than their father.
+
+b) The slope quantifies the effect of explanatory variable(father's height) on the response variable(son's height). Here the slope measures: for each unit increase in the father's height, how much would the height of the son would increase. Here since the slope is 0.5, it means that for each 2 units increase in the height of the father, the height of the son increases by 1 unit.
+
+
 # --------------------------------------------------------------------------------- #
 
 # Part B: Data Preparation, exploring and modelling (78 marks)
@@ -89,20 +89,57 @@ Assumptions:
 
 Data Description:
 The four CSV files are described in the following table:
-  -Covid19.csv: Master file which includes information on continents,countries, and the daily new cases and the daily new deaths in each country
-  -Tests.csv:information about daily covid19 tests in each country
-  -Countries.csv:information about the countries
-  -Recovered.csv:information about the daily recovered cases in each country
+-Covid19.csv: Master file which includes information on continents,countries, and the daily new cases and the daily new deaths in each country
+-Tests.csv:information about daily covid19 tests in each country
+-Countries.csv:information about the countries
+-Recovered.csv:information about the daily recovered cases in each country
 
-### Task 1: Data Preparation and Wrangling: (21 marks)
-Load and read the data from the CSV files and store them into dataframes named appropriately.
+## Task 1: Data Preparation and Wrangling: (21 marks)
+### Load and read the data from the CSV files and store them into dataframes named appropriately.
 
+
+```{r}
+library(tidyverse)
+
+
+master_data<-read_csv("C:/joy_R/IDS_Finalexam/data/Covid19.csv")
+head(master_data)
+tests_info<-read_csv("C:/joy_R/IDS_Finalexam/data/Tests.csv")
+head(tests_info)
+country_info<-read_csv("C:/joy_R/IDS_Finalexam/data/Countries.csv")
+head(country_info)
+recov_info<-read_csv("C:/joy_R/IDS_Finalexam/data/Recovered.csv")
+head(recov_info)
+```
+
+```{r}
+str(master_data)
+
+```
+
+
+```{r}
+str(tests_info)
+
+```
+
+
+```{r}
+str(country_info)
+
+```
+
+```{r}
+str(recov_info)
+```
+
+
+### Tidy up the dataframe driven from the file “Recovered.csv” to be compatible with the dataframe driven from the file “Covid19.csv”, i.e., every observation should have a record of recovered patients in one country in a single day.
 
 ```{r}
 
 ```
 
-Tidy up the dataframe driven from the file “Recovered.csv” to be compatible with the dataframe driven from the file “Covid19.csv”, i.e., every observation should have a record of recovered patients in one country in a single day.
 
 Change the column names in the dataframes were loaded from the following files accordingly.
 
