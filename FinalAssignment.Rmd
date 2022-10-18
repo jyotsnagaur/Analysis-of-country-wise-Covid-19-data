@@ -12,32 +12,51 @@ knitr::opts_chunk$set(echo = TRUE)
 # Part A - Data Science Questions (12 marks)
 There are four questions in this part, with differing marks. All answers must be recorded in an Rmarkdown file then exported to PDF/HTML file.
 
-(3 marks) From your understanding of ethical data science, mention three principles of a code of ethics that any data scientist should consider.
+Q1. (3 marks) From your understanding of ethical data science, mention three principles of a code of ethics that any data scientist should consider.
 
-Write your answer as:
-P1:___________________________________________________________________
-P2:___________________________________________________________________
-P3:___________________________________________________________________
-(3 marks) To build a visualisation using the ggplot2 library, we use the following template:
 
-ggplot(data= [dataset], mapping = aes(x = [x-variable], y = [y-variable]))+
+
+P1:As a data scientist, we should firstly produce truthful results to the public/stakeholders. We must abstain from producing false projections or 'truthful falsehood'.Truthful falsehood is projecting data in a misleading manner which shows a misleading trend to the people.
+
+P2:It is important to respect the privacy of the people/stakeholders and seek their consent before collecting or using their data for any kind of analysis.
+
+P3:It is important to remember that we remain a member of the society and it is important to work in a manner that is progressive for the society at large. As a data scientist we must be careful to not publish sensitive data and have no intentions of causing harm to public health and safety.
+
+
+
+
+Q2.3 marks) To build a visualisation using the ggplot2 library, we use the following template:
+
+ ggplot(data= [dataset], mapping = aes(x = [x-variable], y = [y-variable]))+
   geom_xxx() +
   other options 
 Based on the above template, mention the main components of building a graph using ggplot2 and describe the meaning of each of these components.
 
-Write your answer as:
-______________________________________________________________________
-______________________________________________________________________
-______________________________________________________________________
-______________________________________________________________________
-______________________________________________________________________
-(3 marks) Describe three properties of the correlation coefficient of two variables
 
-Write your answer as:
-1.  ___________________________________________________________________
-2.  ___________________________________________________________________
-3.  ___________________________________________________________________
-(3 marks) Imagine we have a dataset that lists the heights of the fathers and their sons. You have built a linear model that encodes the relationship between the fathers’ heights and the sons’ heights as follows:
+There are 3 main components here:
+a) the dataset which needs to be displayed. It has to be contained in a data frame/tibble and has to include the x-variable which comes on the x-axis and which is the independent/explanatory variable. It has to also include the y-variable which is the dependent/response variable which changes as x changes and is plotted on the y-axis
+
+b)aesthetics, introduced by the function aes() that takes care of positioning/mapping the variables on the plot.It also includes other elements like color where we can specify if the plot needs to be colored as per a specific group or a specific color. It can include specification for alpha which shows the transparency of plot. It can also contain specification for linetype, size,shape,etc.
+
+c)geometry, introduced by the function geom() that takes care of drawing the graph (bar graph, line, scatter plot, etc). There can be different geometries like horizontal,vertical,diagonal lines, barplot,contour,density plots,point,boxplot,jitter,polygon etc.
+
+
+
+
+Q3. (3 marks) Describe three properties of the correlation coefficient of two variables
+
+
+1.  The Magnitude of the correlation coefficient(R) represents the strength of the relationship. It ranges between -1 and +1.
+
+2.  Direction of the relationship: This is indicated by the sign of the correlation coefficient. A positive R represents an increasing trend in the graph where the y-variable increases with increase in x-variable. A negative R represents a decreasing trend where y-variable decreases with increase in x-variable.
+
+3.  The correlation coefficient is unit-less. The value will stay very similiar even with scaling or normalising any of the variables. The coeeficient between x and y is same as the correlation coefficient between y and x. 
+
+
+
+
+
+Q4. (3 marks) Imagine we have a dataset that lists the heights of the fathers and their sons. You have built a linear model that encodes the relationship between the fathers’ heights and the sons’ heights as follows:
 
 lm(son ~ father, data = heights_data)
 
@@ -60,6 +79,18 @@ _____________________________________________________________________
 # --------------------------------------------------------------------------------- #
 
 # Part B: Data Preparation, exploring and modelling (78 marks)
+
+Introduction:
+
+
+
+
+Assumptions:
+
+
+
+
+
 Data Description:
 The four CSV files are described in the following table:
   -Covid19.csv: Master file which includes information on continents,countries, and the daily new cases and the daily new deaths in each country
@@ -69,6 +100,11 @@ The four CSV files are described in the following table:
 
 ### Task 1: Data Preparation and Wrangling: (21 marks)
 Load and read the data from the CSV files and store them into dataframes named appropriately.
+
+
+```{r}
+
+```
 
 Tidy up the dataframe driven from the file “Recovered.csv” to be compatible with the dataframe driven from the file “Covid19.csv”, i.e., every observation should have a record of recovered patients in one country in a single day.
 
