@@ -38,7 +38,7 @@ a) the dataset which needs to be displayed. It has to be contained in a data fra
 
 b)aesthetics, introduced by the function aes() that takes care of positioning/mapping the variables on the plot.It also includes other elements like color where we can specify if the plot needs to be colored as per a specific group or a specific color. It can include specification for alpha which shows the transparency of plot. It can also contain specification for linetype, size,shape,etc.
 
-c)geometry, introduced by the function geom() that takes care of drawing the graph (bar graph, line, scatter plot, etc). There can be different geometries like horizontal,vertical,diagonal lines, barplot,contour,density plots,point,boxplot,jitter,polygon etc.
+c)geometry, introduced by the function geom() that takes care of drawing the graph (bar graph, line, scatter plot, etc). There can be different geometries like horizontal,vertical,diagonal lines, barplot,contour,density plots,point,boxplot,jitter,polygon etc.All of these geometries can be plotted using their respective codes starting with geom_.
 
 
 
@@ -50,7 +50,7 @@ Q3. (3 marks) Describe three properties of the correlation coefficient of two va
 
 2.  Direction of the relationship: This is indicated by the sign of the correlation coefficient. A positive R represents an increasing trend in the graph where the y-variable increases with increase in x-variable. A negative R represents a decreasing trend where y-variable decreases with increase in x-variable.
 
-3.  The correlation coefficient is unit-less. The value will stay very similar even with scaling or normalising any of the variables. The coefficient between x and y is same as the correlation coefficient between y and x. 
+3.  The correlation coefficient is unit-less. The value will stay very similar even with scaling or normalising any of the variables. The correlation coefficient between x and y is same as the correlation coefficient between y and x. 
 
 
 
@@ -92,7 +92,7 @@ Assumptions:
 Data Description:
 The four CSV files are described in the following table:
   -Covid19.csv: Master file which includes information on continents,countries, and the daily new cases and the daily new deaths in each country
-  -Tests.csv:information about daily covid19 tests in eah country
+  -Tests.csv:information about daily covid19 tests in each country
   -Countries.csv:information about the countries
   -Recovered.csv:information about the daily recovered cases in each country
 
@@ -113,4 +113,3 @@ Change the column names in the dataframes were loaded from the following files a
 ```{r}
 
 ```
-
