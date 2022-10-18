@@ -102,31 +102,28 @@ The four CSV files are described in the following table:
 library(tidyverse)
 
 
-master_data<-read_csv("C:/joy_R/IDS_Finalexam/data/Covid19.csv")
+master_data <- read_csv("C:/joy_R/IDS_Finalexam/data/Covid19.csv")
 head(master_data)
-tests_info<-read_csv("C:/joy_R/IDS_Finalexam/data/Tests.csv")
+tests_info <- read_csv("C:/joy_R/IDS_Finalexam/data/Tests.csv")
 head(tests_info)
-country_info<-read_csv("C:/joy_R/IDS_Finalexam/data/Countries.csv")
+country_info <- read_csv("C:/joy_R/IDS_Finalexam/data/Countries.csv")
 head(country_info)
-recov_info<-read_csv("C:/joy_R/IDS_Finalexam/data/Recovered.csv")
+recov_info <- read_csv("C:/joy_R/IDS_Finalexam/data/Recovered.csv")
 head(recov_info)
 ```
 
 ```{r}
 str(master_data)
-
 ```
 
 
 ```{r}
 str(tests_info)
-
 ```
 
 
 ```{r}
 str(country_info)
-
 ```
 
 ```{r}
