@@ -95,7 +95,8 @@ The four CSV files are described in the following table:
 -Recovered.csv:information about the daily recovered cases in each country
 
 ## Task 1: Data Preparation and Wrangling: (21 marks)
-### Load and read the data from the CSV files and store them into dataframes named appropriately.
+
+### 1.Load and read the data from the CSV files and store them into dataframes named appropriately.
 
 
 ```{r}
@@ -131,7 +132,7 @@ str(recov_info)
 ```
 
 
-### Tidy up the dataframe driven from the file “Recovered.csv” to be compatible with the dataframe driven from the file “Covid19.csv”, i.e., every observation should have a record of recovered patients in one country in a single day.
+### 2.Tidy up the dataframe driven from the file “Recovered.csv” to be compatible with the dataframe driven from the file “Covid19.csv”, i.e., every observation should have a record of recovered patients in one country in a single day.
 
 ```{r}
 new_recov<-t(recov_info)
@@ -180,10 +181,25 @@ recov_6
 ```
 
 
-Change the column names in the dataframes were loaded from the following files accordingly.
-
-
+### 3. Change the column names in the dataframes were loaded from the following files accordingly.
+covid19.csv-Code,Country,Continent,Date,NewCases,NewDeaths
+Tests.csv-Code, Date, NewTests
+Countries.csv-Code,Country,Population,GDP,GDPCapita
+Recovered.csv-Country,Date,Recovered
 
 ```{r}
 
+colnames(master_data) <- c('Code','Country','Continent','Date','NewCases','NewDeaths')
+colnames(tests_info) <- c('Code', 'Date', 'NewTests')
+colnames(country_info) <- c('Code','Country','Population','GDP','GDPCapita')
+colnames(recov_6) <- c('Country','Date','Recovered')
+
+head(master_data)
+head(tests_info)
+head(country_info)
+head(recov_6)
+
 ```
+
+
+
