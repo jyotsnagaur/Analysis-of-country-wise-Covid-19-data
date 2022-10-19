@@ -239,6 +239,7 @@ master_df <- master_df %>%
 master_df
 ```
 
+### 6.Check for NAs in all dataframes and change them to Zero
 ```{r}
 
 ```
