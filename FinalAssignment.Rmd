@@ -232,7 +232,7 @@ m2
 
 ```{r}
 # merging Population,GDP,GDPCapita variable from the country_info dataframe. It has to be merged by using Country and Code column
-master_df <- merge(x = m2, y = country_info, all.x = TRUE, by = c("Country", "Code"))
+master_df <- merge(x = m2, y = country_info, all.x = TRUE, by = c("Code", "Country"))
 master_df <- master_df %>%
   group_by(Country) %>%
   arrange(Country)
@@ -241,5 +241,56 @@ master_df
 
 ### 6.Check for NAs in all dataframes and change them to Zero
 ```{r}
+#Check for NAs in master data frame
+#is.na(master_df)
+#converting Recovered column to numeric in master data frame
+master_df$Recovered <- as.numeric(master_df$Recovered)
+#changing NA values to 0
+master_df[is.na(master_df)] <- 0
+master_df #check the data frame 
+```
+
+
+```{r}
+#Check for NAs in tests_info tibble
+tests_info %>% summarise_all(funs(sum(is.na(.)))) %>% 
+                 gather() %>% filter(value > 0)
+
+#There are no NA values in tests_info 
+```
+```{r}
+#Check for NAs in country_info tibble
+country_info %>% summarise_all(funs(sum(is.na(.)))) %>% 
+                 gather() %>% filter(value > 0)
+
+#There are no NA values in country_info
 
 ```
+
+```{r}
+#Check for NAs in recov_6 data frame
+recov_6 %>% summarise_all(funs(sum(is.na(.)))) %>% 
+                 gather() %>% filter(value > 0)
+
+#there are 185 rows with an NA value
+
+#changing NA values to 0
+recov_6[is.na(recov_6)] <- 0
+recov_6 #check the data frame 
+
+```
+
+###7. Using existing “Date” variable; add month and week variables to the master dataframe. [Hint: you may use functions from lubridate package]
+```{r}
+install.packages("lubridate")
+library(lubridate)
+
+master_df2 <- master_df %>% mutate(Month=month(Date))
+master_df2
+```
+
+```{r}
+master_df3 <- master_df2 %>% mutate(Week=week(Date))
+master_df3
+```
+
