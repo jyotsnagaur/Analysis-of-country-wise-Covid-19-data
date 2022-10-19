@@ -134,7 +134,49 @@ str(recov_info)
 ### Tidy up the dataframe driven from the file “Recovered.csv” to be compatible with the dataframe driven from the file “Covid19.csv”, i.e., every observation should have a record of recovered patients in one country in a single day.
 
 ```{r}
+new_recov<-t(recov_info)
+head(new_recov)
 
+```
+
+
+```{r}
+class(new_recov)
+```
+
+```{r}
+new_recov2<-as.data.frame(new_recov)
+new_recov2
+```
+
+
+```{r}
+colnames(new_recov2) <- c(new_recov2[1,]) #assigning new column headers to each data frame in the list
+new_recov2
+new_recov3 <- new_recov2[-c(1),]
+new_recov3
+new_recov3$date <- row.names(new_recov3)
+
+new_recov3
+```
+
+```{r}
+new_recov4<- pivot_longer(new_recov3, cols = 1:185, names_to ="location",
+ values_to = "cases")
+new_recov4
+```
+
+
+```{r}
+recov_5<- new_recov4 %>% group_by(location) %>% arrange(location)
+recov_5
+```
+
+```{r}
+recov_6 <- recov_5%>% select(location, everything())
+recov_6
+recov_6$date <- as.Date(recov_6$date, format = '%Y.%m.%d')
+recov_6 
 ```
 
 
