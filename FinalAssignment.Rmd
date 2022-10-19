@@ -294,3 +294,8 @@ master_df3 <- master_df2 %>% mutate(Week=week(Date))
 master_df3
 ```
 
+## Task 2: Exploratory Data Analysis: (35 marks)
+
+### Add four new variables to the master dataframe (“CumCases”, “CumDeaths”, “CumRecovered”, “CumTests”). These variables should reflect the cumulative relevant data up to the date of the observation; i.e., CumCases for country “X” at Date “Y” should reflect the total number of cases in country “X” since the beginning of recording data till the date “Y”.
+
+[Hint: first arrange by date and country, then for each new variable to be added you need to group by country and mutate the new column using the cumsum function]
