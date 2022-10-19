@@ -135,9 +135,8 @@ str(recov_info)
 ### 2.Tidy up the dataframe driven from the file “Recovered.csv” to be compatible with the dataframe driven from the file “Covid19.csv”, i.e., every observation should have a record of recovered patients in one country in a single day.
 
 ```{r}
-new_recov<-t(recov_info)
+new_recov <- t(recov_info)
 head(new_recov)
-
 ```
 
 
@@ -146,15 +145,15 @@ class(new_recov)
 ```
 
 ```{r}
-new_recov2<-as.data.frame(new_recov)
+new_recov2 <- as.data.frame(new_recov)
 new_recov2
 ```
 
 
 ```{r}
-colnames(new_recov2) <- c(new_recov2[1,]) #assigning new column headers to each data frame in the list
+colnames(new_recov2) <- c(new_recov2[1, ]) # assigning new column headers to each data frame in the list
 new_recov2
-new_recov3 <- new_recov2[-c(1),]
+new_recov3 <- new_recov2[-c(1), ]
 new_recov3
 new_recov3$date <- row.names(new_recov3)
 
@@ -162,22 +161,26 @@ new_recov3
 ```
 
 ```{r}
-new_recov4<- pivot_longer(new_recov3, cols = 1:185, names_to ="location",
- values_to = "cases")
+new_recov4 <- pivot_longer(new_recov3,
+  cols = 1:185, names_to = "location",
+  values_to = "cases"
+)
 new_recov4
 ```
 
 
 ```{r}
-recov_5<- new_recov4 %>% group_by(location) %>% arrange(location)
+recov_5 <- new_recov4 %>%
+  group_by(location) %>%
+  arrange(location)
 recov_5
 ```
 
 ```{r}
-recov_6 <- recov_5%>% select(location, everything())
+recov_6 <- recov_5 %>% select(location, everything())
 recov_6
-recov_6$date <- as.Date(recov_6$date, format = '%Y.%m.%d')
-recov_6 
+recov_6$date <- as.Date(recov_6$date, format = "%Y.%m.%d")
+recov_6
 ```
 
 
@@ -189,24 +192,53 @@ Recovered.csv-Country,Date,Recovered
 
 ```{r}
 
-colnames(master_data) <- c('Code','Country','Continent','Date','NewCases','NewDeaths')
-colnames(tests_info) <- c('Code', 'Date', 'NewTests')
-colnames(country_info) <- c('Code','Country','Population','GDP','GDPCapita')
-colnames(recov_6) <- c('Country','Date','Recovered')
+colnames(master_data) <- c("Code", "Country", "Continent", "Date", "NewCases", "NewDeaths")
+colnames(tests_info) <- c("Code", "Date", "NewTests")
+colnames(country_info) <- c("Code", "Country", "Population", "GDP", "GDPCapita")
+colnames(recov_6) <- c("Country", "Date", "Recovered")
 
 head(master_data)
 head(tests_info)
 head(country_info)
 head(recov_6)
-
 ```
 ### 4. Ensure that all dates variables are of date data type and with the same format across the dataframes.
 ```{r}
 class(master_data$Date)
 class(tests_info$Date)
-class(recov_6$Date)
-#country_info data frame doesnt have a Date variable. Rest in all data tibbles, the date variable is of Date type.
-
+class(recov_6$Date) # date variable changed to Date type in question-2 above.
+# country_info data tibble doesnot have a Date variable. Rest in all data tibbles, the date variable is of Date type.
 ```
 
+### 5. Considering the master dataframe is the one loaded from the “Covid19.csv” file, add new 5 variables to it from the other files (Recovered.csv, Tests.csv, Countries.csv). The 5 new added variables should be named (“Recovered”, “NewTests”, “Population”, “GDP”, “GDPCapita”) accordingly.
 
+```{r}
+# merging Recovered variable from the recov_6 dataframe. It has to be merged by using Date and Country column
+m1 <- merge(x = master_data, y = recov_6, all.x = TRUE, by = c("Date", "Country"))
+m1 <- m1 %>%
+  group_by(Country) %>%
+  arrange(Country)
+m1
+```
+
+```{r}
+# merging NewTests variable from the tests_info dataframe. It has to be merged by using Date and Code column
+m2 <- merge(x = m1, y = tests_info, all.x = TRUE, by = c("Date", "Code"))
+m2 <- m2 %>%
+  group_by(Country) %>%
+  arrange(Country)
+m2
+```
+
+```{r}
+# merging Population,GDP,GDPCapita variable from the country_info dataframe. It has to be merged by using Country and Code column
+master_df <- merge(x = m2, y = country_info, all.x = TRUE, by = c("Country", "Code"))
+master_df <- master_df %>%
+  group_by(Country) %>%
+  arrange(Country)
+master_df
+```
+
+```{r}
+
+```
