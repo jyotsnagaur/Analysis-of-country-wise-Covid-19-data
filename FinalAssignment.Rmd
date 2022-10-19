@@ -200,6 +200,13 @@ head(country_info)
 head(recov_6)
 
 ```
+### 4. Ensure that all dates variables are of date data type and with the same format across the dataframes.
+```{r}
+class(master_data$Date)
+class(tests_info$Date)
+class(recov_6$Date)
+#country_info data frame doesnt have a Date variable. Rest in all data tibbles, the date variable is of Date type.
 
+```
 
 
