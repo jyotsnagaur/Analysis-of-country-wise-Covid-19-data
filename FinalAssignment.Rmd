@@ -136,7 +136,7 @@ str(recov_info)
 
 ```{r}
 new_recov <- t(recov_info)
-head(new_recov)
+# head(new_recov)
 ```
 
 
@@ -241,43 +241,47 @@ master_df
 
 ### 6.Check for NAs in all dataframes and change them to Zero
 ```{r}
-#Check for NAs in master data frame
-#is.na(master_df)
-#converting Recovered column to numeric in master data frame
+# Check for NAs in master data frame
+# is.na(master_df)
+# converting Recovered column to numeric in master data frame
 master_df$Recovered <- as.numeric(master_df$Recovered)
-#changing NA values to 0
+# changing NA values to 0
 master_df[is.na(master_df)] <- 0
-master_df #check the data frame 
+master_df # check the data frame
 ```
 
 
 ```{r}
-#Check for NAs in tests_info tibble
-tests_info %>% summarise_all(funs(sum(is.na(.)))) %>% 
-                 gather() %>% filter(value > 0)
+# Check for NAs in tests_info tibble
+tests_info %>%
+  summarise_all(funs(sum(is.na(.)))) %>%
+  gather() %>%
+  filter(value > 0)
 
-#There are no NA values in tests_info 
+# There are no NA values in tests_info
 ```
 ```{r}
-#Check for NAs in country_info tibble
-country_info %>% summarise_all(funs(sum(is.na(.)))) %>% 
-                 gather() %>% filter(value > 0)
+# Check for NAs in country_info tibble
+country_info %>%
+  summarise_all(funs(sum(is.na(.)))) %>%
+  gather() %>%
+  filter(value > 0)
 
-#There are no NA values in country_info
-
+# There are no NA values in country_info
 ```
 
 ```{r}
-#Check for NAs in recov_6 data frame
-recov_6 %>% summarise_all(funs(sum(is.na(.)))) %>% 
-                 gather() %>% filter(value > 0)
+# Check for NAs in recov_6 data frame
+recov_6 %>%
+  summarise_all(funs(sum(is.na(.)))) %>%
+  gather() %>%
+  filter(value > 0)
 
-#there are 185 rows with an NA value
+# there are 185 rows with an NA value
 
-#changing NA values to 0
+# changing NA values to 0
 recov_6[is.na(recov_6)] <- 0
-recov_6 #check the data frame 
-
+recov_6 # check the data frame
 ```
 
 ###7. Using existing “Date” variable; add month and week variables to the master dataframe. [Hint: you may use functions from lubridate package]
@@ -285,17 +289,42 @@ recov_6 #check the data frame
 install.packages("lubridate")
 library(lubridate)
 
-master_df2 <- master_df %>% mutate(Month=month(Date))
+master_df2 <- master_df %>% mutate(Month = month(Date))
 master_df2
 ```
 
 ```{r}
-master_df3 <- master_df2 %>% mutate(Week=week(Date))
+master_df3 <- master_df2 %>% mutate(Week = week(Date))
 master_df3
 ```
 
+# ------------------------------------------------------------------------------------ #
+
 ## Task 2: Exploratory Data Analysis: (35 marks)
 
-### Add four new variables to the master dataframe (“CumCases”, “CumDeaths”, “CumRecovered”, “CumTests”). These variables should reflect the cumulative relevant data up to the date of the observation; i.e., CumCases for country “X” at Date “Y” should reflect the total number of cases in country “X” since the beginning of recording data till the date “Y”.
+### 1. Add four new variables to the master dataframe (“CumCases”, “CumDeaths”, “CumRecovered”, “CumTests”). These variables should reflect the cumulative relevant data up to the date of the observation; i.e., CumCases for country “X” at Date “Y” should reflect the total number of cases in country “X” since the beginning of recording data till the date “Y”.
 
 [Hint: first arrange by date and country, then for each new variable to be added you need to group by country and mutate the new column using the cumsum function]
+```{r}
+# cumulative sum function can be used here
+# The master_df3 already has a date and country column which is arranged as per dates.
+master_df4 <- master_df3 %>%
+  group_by(Country) %>%
+  mutate(CumCases = cumsum(NewCases), CumDeaths = cumsum(NewDeaths), CumRecovered = cumsum(Recovered), CumTests = cumsum(NewTests))
+master_df4
+```
+
+### 2.Add two new variables to the master dataframe (“Active”, “FatalityRate”). Active variable should reflect the infected cases that has not been closed yet (by either recovery or death), and it could be calculated from (CumCases – (CumDeaths + CumRecovered)). On the other hand, FatalityRate variable should reflect the percentages of death to the infected cases up to date and it could be calculated from (CumDeaths / CumCases).
+```{r}
+master_df5 <- master_df4 %>% group_by(Country) %>% mutate(Active=cumsum(CumCases-(CumDeaths + CumRecovered)), FatalityRate=cumsum(CumDeaths / CumCases))
+master_df5
+```
+
+### 3. Add four new variables to the master dataframe (“Cases_1M_Pop”, “Deaths_1M_Pop”, “Recovered_1M_Pop”, “Tests_1M_Pop”) These variables should reflect the cumulative relevant rate per one million of the corresponding country population, (i.e Cases_1M_Pop for country “X” at Date “Y” should reflect the total number of new cases up to date “Y” per million people of country “X” population)
+
+[Hint: Cases_1M_Pop = CumCases*(10^6) / Population)]
+```{r}
+
+```
+
+
