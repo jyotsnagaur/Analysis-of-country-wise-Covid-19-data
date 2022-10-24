@@ -337,3 +337,16 @@ highest_death_date <- master_df6[[which.max(master_df6$CumDeaths), "Date"]]
 highest_death_date
 ```
 
+### 5.Build a graph to show how the cumulative data of (Infected Cases, Deaths, Recovered, Tests) change over the time for the whole world collectively.
+
+[Hint: Use geom_line as a geometry function, use log for the Y axis for better presentation, Use different colour to distinguish between new cases, deaths, and recovered]
+
+```{r}
+
+```
+
+
+
+
+
+
