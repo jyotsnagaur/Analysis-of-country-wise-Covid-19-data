@@ -357,10 +357,41 @@ master_df7
 ```
 
 ```{r}
-#taking log of each variable and plotting
+# taking log of each variable and plotting
+library(ggplot2)
+p <- ggplot(master_df7, aes(x = Date)) +
+  geom_point(aes(y = Cases_world), colour = "green") +
+  geom_line(aes(y = Cases_world), colour = "green") +
+  geom_point(aes(y = Deaths_world), colour = "red") +
+  geom_line(aes(y = Deaths_world), colour = "red") +
+  geom_point(aes(y = Recovered_world), colour = "blue") +
+  geom_line(aes(y = Recovered_world), colour = "blue") +
+  geom_point(aes(y = Tests_world), colour = "grey") +
+  geom_line(aes(y = Tests_world), colour = "grey") +
+  xlab("Date") +
+  ylab("Exponential values of cum cases, deaths,recovered, tests") +
+  ggtitle("Trend of cumulative new cases, deaths,recovered and tests during Jan 2020 to May 2020 in the world")
+
+# Possible values for trans : 'log2', 'log10'
+
+# Format y axis tick mark labels to show exponents
+require(scales)
+p + scale_y_continuous(
+  trans = log10_trans(),
+  breaks = trans_breaks("log10", function(x) 10^x),
+  labels = trans_format("log10", math_format(10^.x))
+)
+
+
 
 ```
 
+
+
+
+```{r}
+
+```
 
 
 
