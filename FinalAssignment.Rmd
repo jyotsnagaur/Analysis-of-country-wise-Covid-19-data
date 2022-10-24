@@ -387,10 +387,12 @@ p + scale_y_continuous(
 ```
 
 
+### 6.Extract the data corresonding to the last day (05/05/2020) and save it in a separate dataframe and name it “lastDay_data”.
 
+[Hint: use filter function with Date = “2020-05-05”]
 
 ```{r}
-
+lastDay_data<- 
 ```
 
 
