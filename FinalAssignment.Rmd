@@ -343,8 +343,23 @@ highest_death_date
 
 ```{r}
 
+#Using summarise function to take sum of daily cases of different countries on each date
+master_df7 <- master_df6 %>% group_by(Date) %>% summarise(Cases_world=sum(NewCases), Deaths_world=sum(NewDeaths),Recovered_world=sum(Recovered), Tests_world=sum(NewTests))
+
+
+#to get the cumulative data of the above world variables I use cumsum function
+master_df7$Cases_world <- cumsum(master_df7$Cases_world)
+master_df7$Deaths_world <- cumsum(master_df7$Deaths_world)
+master_df7$Recovered_world <- cumsum(master_df7$Recovered_world)
+master_df7$Tests_world <- cumsum(master_df7$Tests_world)
+
+master_df7
 ```
 
+```{r}
+#taking log of each variable and plotting
+
+```
 
 
 
