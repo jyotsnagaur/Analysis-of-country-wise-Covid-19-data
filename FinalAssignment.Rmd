@@ -284,7 +284,7 @@ recov_6[is.na(recov_6)] <- 0
 recov_6 # check the data frame
 ```
 
-###7. Using existing “Date” variable; add month and week variables to the master dataframe. [Hint: you may use functions from lubridate package]
+### 7. Using existing “Date” variable; add month and week variables to the master dataframe. [Hint: you may use functions from lubridate package]
 ```{r}
 install.packages("lubridate")
 library(lubridate)
@@ -324,7 +324,16 @@ master_df5
 
 [Hint: Cases_1M_Pop = CumCases*(10^6) / Population)]
 ```{r}
-
+master_df6 <- master_df5 %>% group_by(Country) %>% mutate(Cases_1M_Pop=CumCases*(10^6) / Population, Deaths_1M_Pop=CumDeaths*(10^6) / Population, Recovered_1M_Pop=CumRecovered*(10^6) / Population, Tests_1M_Pop=CumTests*(10^6) / Population)
+master_df6
 ```
 
+### 4.Find the day with the highest reported death toll across the world. Print the date and the death toll of that day.
+```{r}
+
+highest_death_toll <- master_df6[[which.max(master_df6$CumDeaths), "CumDeaths"]]
+highest_death_toll
+highest_death_date <- master_df6[[which.max(master_df6$CumDeaths), "Date"]]
+highest_death_date
+```
 
