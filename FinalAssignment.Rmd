@@ -439,7 +439,7 @@ continent_data
 ```{r}
 #preparing data to plot
 
-coun <- c('USA','ESP','ITA','GBR','DEU','RUS','FRA','TUR','BRA','IRN')
+coun <- top10casesW$Code
 
 CumCases_with_time <- master_df6 %>% filter(Code %in% coun)
 
@@ -475,22 +475,41 @@ p + scale_y_continuous(
 [hint: geom_line function with date on x_axis and each of the values of the variables in y_axis]
 
 ```{r}
+#preparing data to plot
 
+coun2 <- top10activeW$Code
+
+Active_with_time <- master_df6 %>% filter(Code %in% coun2)
+
+Active_with_time 
 ```
 
 
 
-```{r}
+```{r fig.align="center", echo = FALSE,fig.width = 15}
+#plotting
+p = ggplot(data = Active_with_time, aes(x = Date, color=y)) +
+  geom_line(aes(y = NewCases, color="New Cases"))+
+  geom_line(aes(y = NewDeaths, color="New Deaths"))+
+  geom_line(aes(y = Recovered, color="Recovered"))+
+  xlab("Month") +
+  ylab("Exponential values of total cases") +
+  ggtitle("Daily new cases,recovered cases and deaths in top 10 countries with current highest active cases")
 
 
 
+#facet wrap for subgraph according to country
+q= p + facet_wrap(~ Country)+labs(color="Daily New Cases")
 
-p = ggplot(data = mydata4, aes(x = GDP_percap,colour = income_class)) +
-  geom_point(aes(y = Hap_sc),size=0.01)+
-  xlab("GDP per capita") +
-  ylab("Happiness Score") +
-  ggtitle("The trend of Happiness Score with respect to GDP per capita of Top20 Happy countries")
+# Possible values for trans : 'log2', 'log10'
 
-p + facet_wrap(~ Year)
+# Format y axis tick mark labels to show exponents
+require(scales)
+q + scale_y_continuous(
+  trans = log10_trans(),
+  breaks = trans_breaks("log10", function(x) 10^x),
+  labels = trans_format("log10", math_format(10^.x))
+)
+
 ```
 
