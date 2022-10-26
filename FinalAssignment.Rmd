@@ -360,7 +360,7 @@ master_df7
 ```
 
 ```{r}
-# taking log of each variable and plotting
+# plotting
 library(ggplot2)
 p <- ggplot(master_df7, aes(x = Date)) +
   geom_line(aes(y = Cases_world), colour = "green") +
