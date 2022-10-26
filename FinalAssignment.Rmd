@@ -330,11 +330,14 @@ master_df6
 
 ### 4.Find the day with the highest reported death toll across the world. Print the date and the death toll of that day.
 ```{r}
+deaths_per_day <- master_df6 %>% group_by(Date) %>% summarise(death_toll = sum(NewDeaths))
 
-highest_death_toll <- master_df6[[which.max(master_df6$CumDeaths), "CumDeaths"]]
+
+highest_death_toll <- deaths_per_day[[which.max(deaths_per_day$death_toll), "death_toll"]]
 highest_death_toll
-highest_death_date <- master_df6[[which.max(master_df6$CumDeaths), "Date"]]
+highest_death_date <- deaths_per_day[[which.max(deaths_per_day$death_toll), "Date"]]
 highest_death_date
+
 ```
 
 ### 5.Build a graph to show how the cumulative data of (Infected Cases, Deaths, Recovered, Tests) change over the time for the whole world collectively.
@@ -360,13 +363,9 @@ master_df7
 # taking log of each variable and plotting
 library(ggplot2)
 p <- ggplot(master_df7, aes(x = Date)) +
-  geom_point(aes(y = Cases_world), colour = "green") +
   geom_line(aes(y = Cases_world), colour = "green") +
-  geom_point(aes(y = Deaths_world), colour = "red") +
   geom_line(aes(y = Deaths_world), colour = "red") +
-  geom_point(aes(y = Recovered_world), colour = "blue") +
   geom_line(aes(y = Recovered_world), colour = "blue") +
-  geom_point(aes(y = Tests_world), colour = "grey") +
   geom_line(aes(y = Tests_world), colour = "grey") +
   xlab("Date") +
   ylab("Exponential values of cum cases, deaths,recovered, tests") +
