@@ -470,3 +470,11 @@ p + scale_y_continuous(
 
 ```
 
+### 10. Build a graph for the top 10 countries with current highest active cases which was obtained previously in question 7. The graph should have one subgraph (i.e., using facet function) for each of these countries, every subgraph should show how the new cases, new deaths, and new recovered cases were changing over the time (Use log for Y axis for better presentation, Use different colour to distinguish between new cases, deaths, and recovered).
+
+[hint: geom_line function with date on x_axis and each of the values of the variables in y_axis]
+
+```{r}
+
+```
+
