@@ -519,12 +519,67 @@ q + scale_y_continuous(
 
 
 ```{r}
-top10testsMW
+
+coun3 <- top10testsMW$Code
+
+Test_with_time <- master_df6 %>% filter(Code %in% coun3)
+
+Test_with_time 
+
+
+```
+
+
+```{r}
+ggplot(Test_with_time, aes(x = Date, y = Relative_Humidity)) +
+  geom_bar(stat = "identity", fill = "purple") +
+  facet_wrap(~Year, ncol = 3) +
+  labs(
+    title = "Trend in Monthly Humidity - ACT, Australia",
+    subtitle = "Data plotted by year",
+    y = "Relative_Humidity (%)",
+    x = "Month"
+  ) +
+  theme_bw(base_size = 15) +
+  scale_x_discrete(limits = m_order)
+```
 
 
 
 
 
 
+
+```{r}
+test_country_detail <- Test_with_time %>% group_by(Country) %>% summarise(infected_total=max(CumCases), total_tests=max(CumTests), total_test_per_million=max(Tests_1M_Pop))
+
+test_country_detail
+```
+
+```{r}
+plot_covid_test <-test_country_detail %>% pivot_longer(cols = c(infected_total, total_tests, total_test_per_million),
+                           names_to = "Test_Detail")
+plot_covid_test 
+```
+
+```{r}
+p3 = ggplot(plot_covid_test,aes(x = Country, 
+                     y = value, 
+                     col = Test_Detail, 
+                     group = Test_Detail,
+                     fill= Test_Detail)) +
+  geom_bar(position="dodge", stat = "identity") +
+  #To set x axis labels as vertical 
+  theme(axis.text.x = element_text(angle = 90, 
+                             hjust = 1,
+                             vjust = 0.5))
+
+# Format y axis tick mark labels to show exponents
+require(scales)
+p3 + scale_y_continuous(
+  trans = log10_trans(),
+  breaks = trans_breaks("log10", function(x) 10^x),
+  labels = trans_format("log10", math_format(10^.x))
+)
 ```
 
