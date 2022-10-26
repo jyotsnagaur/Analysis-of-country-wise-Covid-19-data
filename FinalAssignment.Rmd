@@ -478,3 +478,19 @@ p + scale_y_continuous(
 
 ```
 
+
+
+```{r}
+
+
+
+
+p = ggplot(data = mydata4, aes(x = GDP_percap,colour = income_class)) +
+  geom_point(aes(y = Hap_sc),size=0.01)+
+  xlab("GDP per capita") +
+  ylab("Happiness Score") +
+  ggtitle("The trend of Happiness Score with respect to GDP per capita of Top20 Happy countries")
+
+p + facet_wrap(~ Year)
+```
+
