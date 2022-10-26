@@ -519,7 +519,7 @@ q + scale_y_continuous(
 
 
 ```{r}
-
+#Preparing the data
 coun3 <- top10testsMW$Code
 
 Test_with_time <- master_df6 %>% filter(Code %in% coun3)
@@ -528,26 +528,6 @@ Test_with_time
 
 
 ```
-
-
-```{r}
-ggplot(Test_with_time, aes(x = Date, y = Relative_Humidity)) +
-  geom_bar(stat = "identity", fill = "purple") +
-  facet_wrap(~Year, ncol = 3) +
-  labs(
-    title = "Trend in Monthly Humidity - ACT, Australia",
-    subtitle = "Data plotted by year",
-    y = "Relative_Humidity (%)",
-    x = "Month"
-  ) +
-  theme_bw(base_size = 15) +
-  scale_x_discrete(limits = m_order)
-```
-
-
-
-
-
 
 
 ```{r}
