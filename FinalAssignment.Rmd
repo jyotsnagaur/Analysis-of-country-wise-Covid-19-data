@@ -418,7 +418,7 @@ top10fatalityW
 
 
 ```{r}
-top10testsMW<-head(arrange(lastDay_data, desc(CumTests)), n=10)
+top10testsMW<-head(arrange(lastDay_data, desc(Tests_1M_Pop)), n=10)
 top10testsMW
 ```
 
@@ -510,6 +510,21 @@ q + scale_y_continuous(
   breaks = trans_breaks("log10", function(x) 10^x),
   labels = trans_format("log10", math_format(10^.x))
 )
+
+```
+
+### 11. Build a graph for the top 10 countries with current highest total tests per one million of the population which was obtained previously in question 7. This graph should present total number of infected cases, total tests so far, and the total tests per million of the population for each country.
+
+[hint: you can use bar chart to achieve this task]
+
+
+```{r}
+top10testsMW
+
+
+
+
+
 
 ```
 
