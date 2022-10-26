@@ -391,9 +391,32 @@ p + scale_y_continuous(
 [Hint: use filter function with Date = “2020-05-05”]
 
 ```{r}
-lastDay_data<- 
+lastDay_data <- master_df6 %>% filter(Date == "2020-05-05")
+lastDay_data
 ```
 
+### 7.Based on the data of the last day, extract the records of the top 10 countries worldwide that have current active cases, total confirmed cases, and fatality rate in separate dataframes (i.e., top10activeW, top10casesW, top10fatalityW, top10testsMW).
+
+[Hint: you can use head(arranged_data, n=10) to get the top 10 records]
 
 
+
+```{r}
+top10activeW <- head(arrange(lastDay_data, desc(Active)), n=10)
+top10activeW
+```
+
+```{r}
+top10casesW <- head(arrange(lastDay_data, desc(CumCases)), n=10)
+top10casesW
+```
+
+```{r}
+top10fatalityW<-head(arrange(lastDay_data, desc(FatalityRate)), n=10)
+top10fatalityW
+```
+
+```{r}
+
+```
 
