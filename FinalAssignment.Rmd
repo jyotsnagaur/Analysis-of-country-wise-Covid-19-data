@@ -416,6 +416,14 @@ top10fatalityW<-head(arrange(lastDay_data, desc(FatalityRate)), n=10)
 top10fatalityW
 ```
 
+
+```{r}
+top10testsMW<-head(arrange(lastDay_data, desc(CumTests)), n=10)
+top10testsMW
+```
+
+### 8.Based on the data of the last day, print the up to date confirmed, death, recovered cases as well as the tests for every continent
+
 ```{r}
 
 ```
