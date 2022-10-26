@@ -435,8 +435,38 @@ continent_data
 
 [Hint: first you need to get the data of the top-10 countries and then plot their lines]
 
+
 ```{r}
-top10casesW
+#preparing data to plot
+
+coun <- c('USA','ESP','ITA','GBR','DEU','RUS','FRA','TUR','BRA','IRN')
+
+CumCases_with_time <- master_df6 %>% filter(Code %in% coun)
+
+CumCases_with_time
+
+```
+
+
+```{r}
+
+# plotting
+library(ggplot2)
+p <- ggplot(CumCases_with_time, aes(x = Date)) +
+  geom_line(aes(y = CumCases, color=Country)) +
+  xlab("Date") +
+  ylab("Exponential values of total cases") +
+  ggtitle("Total number of cases over the time for the top 10 countries")
+
+# Possible values for trans : 'log2', 'log10'
+
+# Format y axis tick mark labels to show exponents
+require(scales)
+p + scale_y_continuous(
+  trans = log10_trans(),
+  breaks = trans_breaks("log10", function(x) 10^x),
+  labels = trans_format("log10", math_format(10^.x))
+)
 
 ```
 
