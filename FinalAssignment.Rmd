@@ -543,6 +543,8 @@ plot_covid_test
 ```
 
 ```{r}
+#plotting the data
+
 p3 = ggplot(plot_covid_test,aes(x = Country, 
                      y = value, 
                      col = Test_Detail, 
@@ -562,4 +564,44 @@ p3 + scale_y_continuous(
   labels = trans_format("log10", math_format(10^.x))
 )
 ```
+### 12.Build a graph to present the statistics of all continents which was obtained previously in question 8 (Use log for Y axis for better presentation, Use Continent in the legend, make sure x-axis labels does not overlap). 
+
+
+```{r}
+c_plot <- continent_data%>% pivot_longer(cols = c(case_con, death_con, recov_con,test_con),
+                           names_to = "Confirmed_Data")
+c_plot 
+```
+
+```{r}
+#plotting the data
+
+p4 = ggplot(c_plot,aes(x = Continent, 
+                     y = value, 
+                     col = Confirmed_Data, 
+                     group = Confirmed_Data,
+                     fill= Confirmed_Data)) +
+  geom_bar(position="dodge", stat = "identity") +
+  #To set x axis labels as vertical 
+  theme(axis.text.x = element_text(angle = 90, 
+                             hjust = 1,
+                             vjust = 0.5))
+
+# Format y axis tick mark labels to show exponents
+require(scales)
+p4 + scale_y_continuous(
+  trans = log10_trans(),
+  breaks = trans_breaks("log10", function(x) 10^x),
+  labels = trans_format("log10", math_format(10^.x))
+)
+```
+
+# ------------------------------------------------------------------------------- #
+
+## Task 3: Data-Driven Modelling: (14 marks)
+
+### 1. Based on the data of the last day, that you have extracted in the previous task, create a separate dataframe named “cor_data” with the data of these variables (CumCases, CumTests, Population, GDP, GDPCapita).
+
+[Hint: you can use select function on the lastday_data dataframe]
+
 
