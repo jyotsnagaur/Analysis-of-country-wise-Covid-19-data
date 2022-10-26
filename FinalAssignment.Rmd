@@ -425,6 +425,18 @@ top10testsMW
 ### 8.Based on the data of the last day, print the up to date confirmed, death, recovered cases as well as the tests for every continent
 
 ```{r}
+continent_data <- lastDay_data %>% group_by(Continent) %>% summarise(case_con=sum(CumCases), death_con=sum(CumDeaths), recov_con=sum(CumRecovered), test_con=sum(CumTests))
+
+continent_data
+```
+
+
+### 9. Build a graph to show the total number of cases over the time for the top 10 countries that have been obtained in question 7 (Use log for Y axis for better presentation).
+
+[Hint: first you need to get the data of the top-10 countries and then plot their lines]
+
+```{r}
+top10casesW
 
 ```
 
