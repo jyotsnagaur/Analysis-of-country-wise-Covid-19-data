@@ -316,7 +316,7 @@ master_df4
 
 ### 2.Add two new variables to the master dataframe (“Active”, “FatalityRate”). Active variable should reflect the infected cases that has not been closed yet (by either recovery or death), and it could be calculated from (CumCases – (CumDeaths + CumRecovered)). On the other hand, FatalityRate variable should reflect the percentages of death to the infected cases up to date and it could be calculated from (CumDeaths / CumCases).
 ```{r}
-master_df5 <- master_df4 %>% group_by(Country) %>% mutate(Active=cumsum(CumCases-(CumDeaths + CumRecovered)), FatalityRate=cumsum(CumDeaths / CumCases))
+master_df5 <- master_df4 %>% group_by(Country) %>% mutate(Active=(CumCases-(CumDeaths + CumRecovered)), FatalityRate=(CumDeaths / CumCases))
 master_df5
 ```
 
@@ -579,9 +579,9 @@ c_plot
 p4 = ggplot(c_plot,aes(x = Continent, 
                      y = value, 
                      col = Confirmed_Data, 
-                     group = Confirmed_Data,
-                     fill= Confirmed_Data)) +
-  geom_bar(position="dodge", stat = "identity") +
+                     group = Continent,
+                     fill= Continent, alpha=0.2)) +
+  geom_bar(stat = "identity") +
   #To set x axis labels as vertical 
   theme(axis.text.x = element_text(angle = 90, 
                              hjust = 1,
@@ -590,9 +590,9 @@ p4 = ggplot(c_plot,aes(x = Continent,
 # Format y axis tick mark labels to show exponents
 require(scales)
 p4 + scale_y_continuous(
-  trans = log10_trans(),
-  breaks = trans_breaks("log10", function(x) 10^x),
-  labels = trans_format("log10", math_format(10^.x))
+  trans = log2_trans(),
+  breaks = trans_breaks("log2", function(x) 2^x),
+  labels = trans_format("log2", math_format(2^.x))
 )
 ```
 
@@ -604,4 +604,7 @@ p4 + scale_y_continuous(
 
 [Hint: you can use select function on the lastday_data dataframe]
 
+```{r}
+
+```
 
