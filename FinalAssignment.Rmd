@@ -587,13 +587,13 @@ p4 = ggplot(c_plot,aes(x = Continent,
                              hjust = 1,
                              vjust = 0.5))
 
-# Format y axis tick mark labels to show exponents
-require(scales)
-p4 + scale_y_continuous(
-  trans = log2_trans(),
-  breaks = trans_breaks("log2", function(x) 2^x),
-  labels = trans_format("log2", math_format(2^.x))
-)
+# # Format y axis tick mark labels to show exponents
+# require(scales)
+# p4 + scale_y_continuous(
+#   trans = log2_trans(),
+#   breaks = trans_breaks("log2", function(x) 2^x),
+#   labels = trans_format("log2", math_format(2^.x))
+# )
 ```
 
 # ------------------------------------------------------------------------------- #
@@ -603,6 +603,32 @@ p4 + scale_y_continuous(
 ### 1. Based on the data of the last day, that you have extracted in the previous task, create a separate dataframe named “cor_data” with the data of these variables (CumCases, CumTests, Population, GDP, GDPCapita).
 
 [Hint: you can use select function on the lastday_data dataframe]
+
+```{r}
+c_data <-lastDay_data %>% select(CumCases, CumTests, Population, GDP, GDPCapita)
+cor_data<- c_data[-1]
+cor_data
+```
+### 2. Compute the correlation matrix between the variables of the “cor_data” and visualise this correlation matrix
+```{r}
+cor(cor_data)
+# show correlation matrix to check the correlation
+# install.packages("GGally")
+library(GGally)
+ggcorr(cor_data, label = TRUE, label_alpha = TRUE)
+```
+
+
+### 3. visualise the distribution of the cumulative cases in the cor_data with and without changing the scale of the x axis to log transformation.
+
+[Hint: you can use the geom_histrogram function]
+```{r}
+ggplot(cor_data, aes(CumCases)) +
+  geom_histogram(aes(y = ..density..), fill = "aquamarine3") +
+  geom_density(color = "red")
+```
+
+### 4. Divide the cor_data into training and testing, where training data represent 65% of the number of rows.
 
 ```{r}
 
