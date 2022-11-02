@@ -573,6 +573,8 @@ p3 + scale_y_continuous(
 )
 ```
 
+Observation from above graph:Portugal had the most number of total tests and hence the most infected cases. The total test per million was highest in Iceland.
+
 ### 12.Build a graph to present the statistics of all continents which was obtained previously in question 8 (Use log for Y axis for better presentation, Use Continent in the legend, make sure x-axis labels does not overlap). 
 
 
@@ -611,6 +613,9 @@ p4 + scale_y_continuous(
   labels = trans_format("log10", math_format(10^.x))
 )
 ```
+
+Observation from above graph:
+
 
 # ------------------------------------------------------------------------------- #
 
