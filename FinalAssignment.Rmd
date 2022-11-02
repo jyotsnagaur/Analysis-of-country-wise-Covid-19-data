@@ -76,16 +76,6 @@ b) The slope quantifies the effect of explanatory variable(father's height) on t
 
 # Part B: Data Preparation, exploring and modelling (78 marks)
 
-Introduction:
-
-
-
-
-Assumptions:
-
-
-
-
 
 Data Description:
 The four CSV files are described in the following table:
@@ -98,8 +88,12 @@ The four CSV files are described in the following table:
 
 ### 1.Load and read the data from the CSV files and store them into dataframes named appropriately.
 
+```{r}
+install.packages("rlang")
+```
 
 ```{r}
+
 library(tidyverse)
 
 
@@ -587,13 +581,13 @@ p4 = ggplot(c_plot,aes(x = Continent,
                              hjust = 1,
                              vjust = 0.5))
 
-# # Format y axis tick mark labels to show exponents
-# require(scales)
-# p4 + scale_y_continuous(
-#   trans = log2_trans(),
-#   breaks = trans_breaks("log2", function(x) 2^x),
-#   labels = trans_format("log2", math_format(2^.x))
-# )
+# Format y axis tick mark labels to show exponents
+require(scales)
+p4 + scale_y_continuous(
+  trans = log2_trans(),
+  breaks = trans_breaks("log2", function(x) 2^x),
+  labels = trans_format("log2", math_format(2^.x))
+)
 ```
 
 # ------------------------------------------------------------------------------- #
@@ -605,6 +599,7 @@ p4 = ggplot(c_plot,aes(x = Continent,
 [Hint: you can use select function on the lastday_data dataframe]
 
 ```{r}
+library(tidyverse)
 c_data <-lastDay_data %>% select(CumCases, CumTests, Population, GDP, GDPCapita)
 cor_data<- c_data[-1]
 cor_data
