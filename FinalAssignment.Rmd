@@ -718,8 +718,11 @@ RMSE(preds, actual)
 
 -  Linear regression is used to predict the value of a continuous variable Y based on one or more input predictor variables X. 
 -  Here in above 2 cases the X variable is the cumulative cases(explanatory variable) and y is the predictor/response variable. 
--  The predictor variable can be 1 variable which means that the value of CumCases only depends on that one variable
--  
+-  The predictor variable can be 1 variable out of the data frame which means that the value of CumCases only depends on that one variable.
+-  In the <b>first Linear Regression model</b> we built, we were assuming that the future value of cumulative cases only depended on the GDP of that country. According to our assumption: The Cumulative Cases and GDP have a linear relationship with each other. The Root Mean Square Error of 1st model was 76591.77. This is a very high value of error and proves that the model is inaccurate or the variables need to be changed into log values to extract a linear relationship.
+-  In the <b>second Linear Regression model</b> we built, we were assuming that the future value of cumulative cases only depended on the GDP of that country. According to our assumption: The Cumulative Cases and GDP have a linear relationship with each other. The Root Mean Square Error of 1st model was 76591.77. This is a very high value of error and proves that the model is inaccurate or the variables need to be changed into log values to extract a linear relationship.
+
+
 
 
 
