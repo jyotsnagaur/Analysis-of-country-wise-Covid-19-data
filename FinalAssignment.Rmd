@@ -616,14 +616,27 @@ library(GGally)
 ggcorr(cor_data, label = TRUE, label_alpha = TRUE)
 ```
 
+```{r}
+# show box plot to all of the variables to check the outliers
+meltData <- cor_data %>% 
+  gather()
+
+p <- ggplot(meltData, aes(key, value)) 
+ 
+p + geom_boxplot() + facet_wrap(~key, scale="free") # viewing sepaartely as the scale of the variables is different
+```
 
 ### 3. visualise the distribution of the cumulative cases in the cor_data with and without changing the scale of the x axis to log transformation.
 
 [Hint: you can use the geom_histrogram function]
 ```{r}
 ggplot(cor_data, aes(CumCases)) +
-  geom_histogram(aes(y = ..density..), fill = "aquamarine3") +
+  geom_histogram(aes(y = ..density..), fill = "aquamarine3", bins =100) +
   geom_density(color = "red")
+  
+
+
+
 ```
 
 ### 4. Divide the cor_data into training and testing, where training data represent 65% of the number of rows.
