@@ -359,7 +359,7 @@ master_df7$Deaths_world <- cumsum(master_df7$Deaths_world)
 master_df7$Recovered_world <- cumsum(master_df7$Recovered_world)
 master_df7$Tests_world <- cumsum(master_df7$Tests_world)
 
-head(master_df7)
+master_df7 #checking data frame
 ```
 
 ```{r}
@@ -391,16 +391,14 @@ p + scale_y_continuous(
 [Hint: use filter function with Date = “2020-05-05”]
 
 ```{r}
-lastDay_data <- master_df6 %>% filter(Date == "2020-05-05")
+lastDay_data <- master_df6 %>% filter(Date == "2020-05-05") #filtering a/c to date to get last day data
 lastDay_data
 ```
 
 ### 7.Based on the data of the last day, extract the records of the top 10 countries worldwide that have current active cases, total confirmed cases, and fatality rate in separate dataframes (i.e., top10activeW, top10casesW, top10fatalityW, top10testsMW).
 
 [Hint: you can use head(arranged_data, n=10) to get the top 10 records]
-
-
-
+Firstly the data needs to be arranged according to the top 10 value of those columns selected. Then the first 10 rows are selected using the head function with n=10.
 ```{r}
 top10activeW <- head(arrange(lastDay_data, desc(Active)), n = 10)
 top10activeW
@@ -423,11 +421,11 @@ top10testsMW
 ```
 
 ### 8.Based on the data of the last day, print the up to date confirmed, death, recovered cases as well as the tests for every continent
-
+Firstly the data needs to be grouped by continent and then the new columns are obtained by summarising the values. Here I am taking the sum of each of the columns to print the latest sum of all cumulative cases 
 ```{r}
 continent_data <- lastDay_data %>%
-  group_by(Continent) %>%
-  summarise(case_con = sum(CumCases), death_con = sum(CumDeaths), recov_con = sum(CumRecovered), test_con = sum(CumTests))
+  group_by(Continent) %>%   #grouping the rows a/c to continent
+  summarise(case_con = sum(CumCases), death_con = sum(CumDeaths), recov_con = sum(CumRecovered), test_con = sum(CumTests)) #taking the sum of CumCases from each country to represent the total cases values of that particular continent
 
 continent_data
 ```
@@ -441,11 +439,11 @@ continent_data
 ```{r}
 # preparing data to plot
 
-coun <- top10casesW$Code
+coun <- top10casesW$Code  #creating vector with Code names of top 10 countries with total cases
 
-CumCases_with_time <- master_df6 %>% filter(Code %in% coun)
+CumCases_with_time <- master_df6 %>% filter(Code %in% coun) #filtering a/c to code vector created above 
 
-head(CumCases_with_time)
+head(CumCases_with_time) #checking the result
 ```
 
 
@@ -477,11 +475,11 @@ p + scale_y_continuous(
 ```{r}
 # preparing data to plot
 
-coun2 <- top10activeW$Code
+coun2 <- top10activeW$Code   #creating vector with Code names of top 10 countries with active cases
 
-Active_with_time <- master_df6 %>% filter(Code %in% coun2)
+Active_with_time <- master_df6 %>% filter(Code %in% coun2) #filtering a/c to code vector created above
 
-head(Active_with_time)
+head(Active_with_time)  #checking the result
 ```
 
 
@@ -519,13 +517,13 @@ q + scale_y_continuous(
 
 ```{r}
 # Preparing the data
-coun3 <- top10testsMW$Code
+coun3 <- top10testsMW$Code  #creating vector with Code names of top 10 countries with tests per million
 
-Test_with_time <- master_df6 %>% filter(Code %in% coun3)
+Test_with_time <- master_df6 %>% filter(Code %in% coun3)   #filtering a/c to code vector created above
 
-head(Test_with_time)
+head(Test_with_time)  #checking the result
 ```
-
+Creating new columns to get the total infected, total tests and total tests per million and grouping the values by country to get rows having observations of the entire duration in 1 row
 
 ```{r}
 test_country_detail <- Test_with_time %>%
@@ -536,11 +534,11 @@ test_country_detail
 ```
 
 ```{r}
-plot_covid_test <- test_country_detail %>% pivot_longer(
-  cols = c(infected_total, total_tests, total_test_per_million),
+plot_covid_test <- test_country_detail %>% pivot_longer( #converting data to long format for creating grouped bar chart
+  cols = c(infected_total, total_tests, total_test_per_million),  #naming new columns to test_detail
   names_to = "Test_Detail"
 )
-plot_covid_test
+plot_covid_test #checking the result
 ```
 
 ```{r}
@@ -573,8 +571,8 @@ p3 + scale_y_continuous(
 
 
 ```{r}
-c_plot <- continent_data %>% pivot_longer(
-  cols = c(case_con, death_con, recov_con, test_con),
+c_plot <- continent_data %>% pivot_longer( #converting data to long format for creating grouped bar chart
+  cols = c(case_con, death_con, recov_con, test_con),  #naming new columns to Confirmed_Data
   names_to = "Confirmed_Data"
 )
 c_plot
@@ -589,7 +587,7 @@ p4 <- ggplot(c_plot, aes(
   y = value,
   col = Confirmed_Data,
   group = Continent,
-  fill = Continent, alpha = 0.9
+  fill = Continent, alpha = 10
 )) +
   geom_bar(stat = "identity", position = "dodge") +
   # To set x axis labels as vertical
@@ -618,8 +616,8 @@ p4 + scale_y_continuous(
 
 ```{r}
 library(tidyverse)
-c_data <- lastDay_data %>% select(CumCases, CumTests, Population, GDP, GDPCapita)
-cor_data <- c_data[-1]
+c_data <- lastDay_data %>% select(CumCases, CumTests, Population, GDP, GDPCapita) #using the select function to only keep the required columns
+cor_data <- c_data[-1] #removing the first column with country names
 cor_data
 ```
 ### 2. Compute the correlation matrix between the variables of the “cor_data” and visualise this correlation matrix
@@ -632,24 +630,36 @@ ggcorr(cor_data, label = TRUE, label_alpha = TRUE)
 ```
 
 ```{r}
-# show box plot to all of the variables to check the outliers
+# show box plot to all of the variables to check the out-liers
 meltData <- cor_data %>%
   gather()
 
 p <- ggplot(meltData, aes(key, value))
 
-p + geom_boxplot() + facet_wrap(~key, scale = "free") # viewing sepaartely as the scale of the variables is different
+p + geom_boxplot() + facet_wrap(~key, scale = "free") # viewing separately as the scale of the variables is different
 ```
 
 ### 3. visualise the distribution of the cumulative cases in the cor_data with and without changing the scale of the x axis to log transformation.
 
 [Hint: you can use the geom_histrogram function]
 ```{r}
+#plotting without changing scale of x-axis
 ggplot(cor_data, aes(CumCases)) +
-  geom_histogram(aes(y = ..density..), fill = "aquamarine3", bins = 50) +
-  xlim(c(0, 1200000)) #+ylim()#normalise data for y-axis
-# geom_density(color = "red")+
+  geom_histogram(aes(y = ..count..), fill = "aquamarine3", bins = 50, position ='jitter', na.rm=TRUE) 
+  
 ```
+```{r}
+ggplot(cor_data, aes(CumCases)) +
+  geom_histogram(aes(y = ..count..), fill = "aquamarine3", bins = 50, position ='jitter', na.rm=TRUE) +
+  
+  
+```
+
+
+
+
+
+
 
 ### 4. Divide the cor_data into training and testing, where training data represent 65% of the number of rows.
 
