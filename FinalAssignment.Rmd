@@ -486,8 +486,6 @@ Active_with_time <- master_df6 %>% filter(Code %in% coun2) #filtering a/c to cod
 head(Active_with_time)  #checking the result
 ```
 
-
-
 ```{r fig.align="center", echo = FALSE,fig.width = 15}
 # plotting
 p <- ggplot(data = Active_with_time, aes(x = Date, color = y)) +
@@ -513,6 +511,9 @@ q + scale_y_continuous(
   labels = trans_format("log10", math_format(10^.x))
 )
 ```
+
+Observation from above graph:The US has shown the maximum increase in total cases towards the last days.In all countries, the graphs have progressed exponentially since Mar 2020.
+
 
 ### 11. Build a graph for the top 10 countries with current highest total tests per one million of the population which was obtained previously in question 7. This graph should present total number of infected cases, total tests so far, and the total tests per million of the population for each country.
 
