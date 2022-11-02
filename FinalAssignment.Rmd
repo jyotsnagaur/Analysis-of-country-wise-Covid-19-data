@@ -385,6 +385,8 @@ p + scale_y_continuous(
 )
 ```
 
+Observation from above graph: The total cases(green) have increased exponentially over the time of 5 months. The number of tests(grey) have also increased which result in pointing towards whether the cases are infected or asymptomatic. The blue line is the recovered cases which follows a similar trend as the infected cases showing a direct co-dependence between the two. The deaths are shown in red which was actually more than the recovered cases during Jan to Feb and slowly afterwards the number of deaths became lower than number of recoveries after Feb. 
+
 
 ### 6.Extract the data corresonding to the last day (05/05/2020) and save it in a separate dataframe and name it “lastDay_data”.
 
@@ -467,6 +469,8 @@ p + scale_y_continuous(
   labels = trans_format("log10", math_format(10^.x))
 )
 ```
+
+Observation from above graph: The UK has shown the most number of total cases on the last day as compared to all other countries.Turkey hasn't experienced/reported cases before March 2020. The infected cases for all the countries has peaked exponentially from Feb on wards.
 
 ### 10. Build a graph for the top 10 countries with current highest active cases which was obtained previously in question 7. The graph should have one subgraph (i.e., using facet function) for each of these countries, every subgraph should show how the new cases, new deaths, and new recovered cases were changing over the time (Use log for Y axis for better presentation, Use different colour to distinguish between new cases, deaths, and recovered).
 
@@ -630,7 +634,7 @@ library(GGally)
 ggcorr(cor_data, label = TRUE, label_alpha = TRUE)
 ```
 
-Observation: The highest correlation is shown between CumCases and CumTests and CumCases and GDP which is 0.9. This means in our data the Cumulative cases are highly dependent on the GDP of the country. It also means that the total number of tests are dependent on the Cumulative infected Cases which is obvious since with increase in the number of tests the infected cases will increase.
+Observation: The highest correlation is shown between CumCases with CumTests and CumCases with GDP which is 0.9. This means in our data the Cumulative cases are highly dependent on the GDP of the country. It also means that the total number of tests are dependent on the Cumulative infected Cases which is obvious since with increase in the number of tests the infected cases will increase.
 
 ```{r}
 # show box plot to all of the variables to check the out-liers
