@@ -89,7 +89,7 @@ The four CSV files are described in the following table:
 ### 1.Load and read the data from the CSV files and store them into dataframes named appropriately.
 
 ```{r}
-install.packages("rlang")
+#install.packages("rlang")
 ```
 
 ```{r}
@@ -140,7 +140,7 @@ class(new_recov)
 
 ```{r}
 new_recov2 <- as.data.frame(new_recov)
-new_recov2
+head(new_recov2)
 ```
 
 
@@ -151,7 +151,7 @@ new_recov3 <- new_recov2[-c(1), ]
 new_recov3
 new_recov3$date <- row.names(new_recov3)
 
-new_recov3
+head(new_recov3)
 ```
 
 ```{r}
@@ -159,7 +159,7 @@ new_recov4 <- pivot_longer(new_recov3,
   cols = 1:185, names_to = "location",
   values_to = "cases"
 )
-new_recov4
+head(new_recov4)
 ```
 
 
@@ -167,14 +167,14 @@ new_recov4
 recov_5 <- new_recov4 %>%
   group_by(location) %>%
   arrange(location)
-recov_5
+head(recov_5)
 ```
 
 ```{r}
 recov_6 <- recov_5 %>% select(location, everything())
 recov_6
 recov_6$date <- as.Date(recov_6$date, format = "%Y.%m.%d")
-recov_6
+head(recov_6)
 ```
 
 
@@ -212,7 +212,7 @@ m1 <- merge(x = master_data, y = recov_6, all.x = TRUE, by = c("Date", "Country"
 m1 <- m1 %>%
   group_by(Country) %>%
   arrange(Country)
-m1
+head(m1)
 ```
 
 ```{r}
@@ -221,7 +221,7 @@ m2 <- merge(x = m1, y = tests_info, all.x = TRUE, by = c("Date", "Code"))
 m2 <- m2 %>%
   group_by(Country) %>%
   arrange(Country)
-m2
+head(m2)
 ```
 
 ```{r}
@@ -230,7 +230,7 @@ master_df <- merge(x = m2, y = country_info, all.x = TRUE, by = c("Code", "Count
 master_df <- master_df %>%
   group_by(Country) %>%
   arrange(Country)
-master_df
+head(master_df)
 ```
 
 ### 6.Check for NAs in all dataframes and change them to Zero
@@ -241,7 +241,7 @@ master_df
 master_df$Recovered <- as.numeric(master_df$Recovered)
 # changing NA values to 0
 master_df[is.na(master_df)] <- 0
-master_df # check the data frame
+head(master_df) # check the data frame
 ```
 
 
@@ -275,21 +275,21 @@ recov_6 %>%
 
 # changing NA values to 0
 recov_6[is.na(recov_6)] <- 0
-recov_6 # check the data frame
+head(recov_6) # check the data frame
 ```
 
 ### 7. Using existing “Date” variable; add month and week variables to the master dataframe. [Hint: you may use functions from lubridate package]
 ```{r}
-install.packages("lubridate")
+#install.packages("lubridate")
 library(lubridate)
 
 master_df2 <- master_df %>% mutate(Month = month(Date))
-master_df2
+head(master_df2)
 ```
 
 ```{r}
 master_df3 <- master_df2 %>% mutate(Week = week(Date))
-master_df3
+head(master_df3)
 ```
 
 # ------------------------------------------------------------------------------------ #
@@ -305,13 +305,13 @@ master_df3
 master_df4 <- master_df3 %>%
   group_by(Country) %>%
   mutate(CumCases = cumsum(NewCases), CumDeaths = cumsum(NewDeaths), CumRecovered = cumsum(Recovered), CumTests = cumsum(NewTests))
-master_df4
+head(master_df4)
 ```
 
 ### 2.Add two new variables to the master dataframe (“Active”, “FatalityRate”). Active variable should reflect the infected cases that has not been closed yet (by either recovery or death), and it could be calculated from (CumCases – (CumDeaths + CumRecovered)). On the other hand, FatalityRate variable should reflect the percentages of death to the infected cases up to date and it could be calculated from (CumDeaths / CumCases).
 ```{r}
 master_df5 <- master_df4 %>% group_by(Country) %>% mutate(Active=(CumCases-(CumDeaths + CumRecovered)), FatalityRate=(CumDeaths / CumCases))
-master_df5
+head(master_df5)
 ```
 
 ### 3. Add four new variables to the master dataframe (“Cases_1M_Pop”, “Deaths_1M_Pop”, “Recovered_1M_Pop”, “Tests_1M_Pop”) These variables should reflect the cumulative relevant rate per one million of the corresponding country population, (i.e Cases_1M_Pop for country “X” at Date “Y” should reflect the total number of new cases up to date “Y” per million people of country “X” population)
@@ -319,7 +319,7 @@ master_df5
 [Hint: Cases_1M_Pop = CumCases*(10^6) / Population)]
 ```{r}
 master_df6 <- master_df5 %>% group_by(Country) %>% mutate(Cases_1M_Pop=CumCases*(10^6) / Population, Deaths_1M_Pop=CumDeaths*(10^6) / Population, Recovered_1M_Pop=CumRecovered*(10^6) / Population, Tests_1M_Pop=CumTests*(10^6) / Population)
-master_df6
+head(master_df6)
 ```
 
 ### 4.Find the day with the highest reported death toll across the world. Print the date and the death toll of that day.
@@ -350,7 +350,7 @@ master_df7$Deaths_world <- cumsum(master_df7$Deaths_world)
 master_df7$Recovered_world <- cumsum(master_df7$Recovered_world)
 master_df7$Tests_world <- cumsum(master_df7$Tests_world)
 
-master_df7
+head(master_df7)
 ```
 
 ```{r}
@@ -437,7 +437,7 @@ coun <- top10casesW$Code
 
 CumCases_with_time <- master_df6 %>% filter(Code %in% coun)
 
-CumCases_with_time
+head(CumCases_with_time)
 
 ```
 
@@ -475,7 +475,7 @@ coun2 <- top10activeW$Code
 
 Active_with_time <- master_df6 %>% filter(Code %in% coun2)
 
-Active_with_time 
+head(Active_with_time)
 ```
 
 
@@ -518,7 +518,7 @@ coun3 <- top10testsMW$Code
 
 Test_with_time <- master_df6 %>% filter(Code %in% coun3)
 
-Test_with_time 
+head(Test_with_time) 
 
 
 ```
@@ -570,12 +570,13 @@ c_plot
 ```{r}
 #plotting the data
 
+library(gghighlight)
 p4 = ggplot(c_plot,aes(x = Continent, 
                      y = value, 
                      col = Confirmed_Data, 
                      group = Continent,
-                     fill= Continent, alpha=0.2)) +
-  geom_bar(stat = "identity") +
+                     fill= Continent, alpha=0.9)) +
+  geom_bar(stat = "identity", position = 'dodge') +
   #To set x axis labels as vertical 
   theme(axis.text.x = element_text(angle = 90, 
                              hjust = 1,
@@ -584,10 +585,12 @@ p4 = ggplot(c_plot,aes(x = Continent,
 # Format y axis tick mark labels to show exponents
 require(scales)
 p4 + scale_y_continuous(
-  trans = log2_trans(),
-  breaks = trans_breaks("log2", function(x) 2^x),
-  labels = trans_format("log2", math_format(2^.x))
+  trans = log10_trans(),
+  breaks = trans_breaks("log10", function(x) 10^x),
+  labels = trans_format("log10", math_format(10^.x))
 )
+
+
 ```
 
 # ------------------------------------------------------------------------------- #
