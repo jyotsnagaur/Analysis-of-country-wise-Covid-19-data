@@ -742,21 +742,40 @@ Write the report as follows:
 
 ## Note: Please see attached dashboard image
 
-## Aim:-
+## Aim:- To create a dashboard with augmented Covid-19 data to spread correct information about the pandemic.
 
 
 ## 1. Objectives:
-  - Realtime augumented data
+  -  Obtain Realtime Covid-19 data from credible sources.
+  -  Process the data to create meaningful and easy to understand charts/graphs
+  -  Present key highlights about the pandemic total cases, deaths, recovered and tests count
+  -  Create a section for precautions and set of do's and don't's for infected persons
+  -  Create a Section for emergency contact numbers and services
+  
 
 ## 2. List of data sources to augment the existing data:
-
+  - John Hopkins University and Medicine data on Coronavirus resource center. http://coronavirus.jhu.edu
+  - Centers for Disease Control and Prevention Covid-19 Data Sources: https://www.cdc.gov/coronavirus/2019-ncov/covid-data/covid-19-data-sources.html
+  - Australian Govt, Dept of Health and Aged Care: https://www.health.gov.au/health-alerts/covid-19/case-numbers-and-statistics
+  - WHO COVID-19 Research Database: who.int/emergencies/diseases/novel-coronavirus-2019/global-research-on-novel-coronavirus-2019-ncov
 
 ## 3. Set of figures/tables to show in the dashboard:
+  - Zoomable world map showing infected cases in each country(shinydashboard can  be done by using leaflet in R)
+  - Side bar Panel with cases highlights showing numbers of infected cases, deaths, recovered and tests count
+  - Graph on comparison of infected cases and deaths
+  - Graph on comparison of number of total tests taken and the infected number of people
+  - Graph on the fatality rate and recovery rate of each country
+  - Table listing important contact information for each region
+  - Table showing infographics on the set of do's and don't's to be followed by positive cases
 
 
 ## 4. Analysis strategy:
 
-
+  - Process the data to create files which consistently are updated and appended with current day information
+  - cross sectional analysis of covid-19 with other global pandemics such as Ebola,H1N1,etc
+  - identify and display geographical location of covid-hotspots an nearest health centers
+  - analysing the total number of tests and positive and negative cases to understand current trend and encourage tests and    vaccination
+  - create Machine Learning models to predict future infected cases and their exponential increase.
 
 
 
