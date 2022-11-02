@@ -570,7 +570,7 @@ c_plot
 ```{r}
 #plotting the data
 
-library(gghighlight)
+#library(gghighlight)
 p4 = ggplot(c_plot,aes(x = Continent, 
                      y = value, 
                      col = Confirmed_Data, 
@@ -631,17 +631,91 @@ p + geom_boxplot() + facet_wrap(~key, scale="free") # viewing sepaartely as the 
 [Hint: you can use the geom_histrogram function]
 ```{r}
 ggplot(cor_data, aes(CumCases)) +
-  geom_histogram(aes(y = ..density..), fill = "aquamarine3", bins =100) +
-  geom_density(color = "red")
+  geom_histogram(aes(y = ..density..), fill = "aquamarine3", bins =50) +xlim(c(0,1200000))#+ylim()#normalise data for y-axis
+  #geom_density(color = "red")+
   
-
-
+  
 
 ```
 
 ### 4. Divide the cor_data into training and testing, where training data represent 65% of the number of rows.
 
 ```{r}
+# split data into train and test
+#install.packages("caret")
+library(caret)
+
+set.seed(2)
+index <- createDataPartition(cor_data$CumCases, p = .65, list = FALSE)
+length(cor_data$CumCases)
+
+train <- cor_data[index, ]
+test <- cor_data[-index, ]
+
+dim(train)
+dim(test)
+```
+
+### 5. Train a linear regression model to predict cumulative cases from the GDP of the countries. Then, evaluate this model on the test data and print the root mean square error value.
+
+```{r}
+# build a linear regression model only between cumulative cases and GDP of the countries
+lmModel <- lm(CumCases ~ GDP , data = train)
+print(lmModel)
+
+# Validating Regression Coefficients and Models
+summary(lmModel)
+
+# visualise the model
+plot(lmModel)
+
 
 ```
+
+
+```{r}
+# predicting
+test$PredictedCumCases <- predict(lmModel, test)
+head(test[ , c("CumCases", "PredictedCumCases")])
+
+# compute the residual mean square error (RMSE) as a way of evaluation
+actual <- test$CumCases
+preds <- test$PredictedCumCases
+RMSE(preds, actual)
+```
+
+
+### 6.Train another linear regression model to predict cumulative cases from all the other variables. Then, evaluate this model on the test data and print the root mean square error value
+
+```{r}
+# build a linear model between the CumCases and all of the other variables
+lmModel1 <- lm(CumCases ~ . , data = train)
+print(lmModel1)
+
+# Validating Regression Coefficients and Models
+summary(lmModel1)
+
+
+```
+
+
+
+
+
+```{r}
+# predicting
+test$PredictedCumCases_1 <- predict(lmModel1, test)
+head(test[ , c("CumCases", "PredictedCumCases",  "PredictedCumCases_1")])
+
+# RMSE
+actual <- test$CumCases
+preds <- test$PredictedCumCases_1
+
+RMSE(preds, actual)
+```
+
+
+
+
+
 
