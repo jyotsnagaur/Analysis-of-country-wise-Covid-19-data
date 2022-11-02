@@ -663,7 +663,7 @@ Observation: The distribution looks more evenly spread out when we take the log 
 # install.packages("caret")
 library(caret)
 
-set.seed(2) # to specify the random state to not let the coefficient of regression values change with every run
+
 index <- createDataPartition(cor_data$CumCases, p = .65, list = FALSE)
 length(cor_data$CumCases)
 
@@ -697,7 +697,7 @@ head(test[, c("CumCases", "PredictedCumCases")])
 # compute the residual mean square error (RMSE) as a way of evaluation
 actual <- test$CumCases
 preds <- test$PredictedCumCases
-RMSE(preds, actual)
+RMSE(preds, actual) #calculating the Root Mean Square error. The higher the RMSE, the more inaccurate the model is.
 ```
 
 
