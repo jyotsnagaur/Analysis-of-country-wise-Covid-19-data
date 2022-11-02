@@ -654,12 +654,7 @@ ggplot(cor_data, aes(CumCases)) +
   scale_x_log10()
   
 ```
-The distribution looks more evenly spread out when we take the log values of x-axis as compared to its original values.
-
-
-
-
-
+Observation: The distribution looks more evenly spread out when we take the log values of x-axis as compared to its original values. Perhaps because taking the log reduces the magnitude of the value. Also the y-axis in first case shows the count of each range and the y-axis of second case shows the density of each case.
 
 ### 4. Divide the cor_data into training and testing, where training data represent 65% of the number of rows.
 
@@ -668,15 +663,15 @@ The distribution looks more evenly spread out when we take the log values of x-a
 # install.packages("caret")
 library(caret)
 
-set.seed(2)
+set.seed(2) # to specify the random state to not let the coefficient of regression values change with every run
 index <- createDataPartition(cor_data$CumCases, p = .65, list = FALSE)
 length(cor_data$CumCases)
 
-train <- cor_data[index, ]
-test <- cor_data[-index, ]
+train <- cor_data[index, ] #specify training set by subsetting
+test <- cor_data[-index, ] #specify testing set by subsetting
 
-dim(train)
-dim(test)
+dim(train) #checking to see the dimension of training set where X_train=136, y_train=5
+dim(test)  #checking to see the dimension of testing set where X_test=71, y_test=5
 ```
 
 ### 5. Train a linear regression model to predict cumulative cases from the GDP of the countries. Then, evaluate this model on the test data and print the root mean square error value.
@@ -692,7 +687,7 @@ summary(lmModel)
 # visualise the model
 plot(lmModel)
 ```
-
+Inference: The data is mostly concentrated and in a scatter formation on the graph. Perhaps it is not so suitable for a linear regression.The fitted line hardly touches some points so will have huge value of error.
 
 ```{r}
 # predicting
