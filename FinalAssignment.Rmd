@@ -130,7 +130,7 @@ str(recov_info)  # checking the structure of tibble created
 
 ```{r}
 new_recov <- t(recov_info)  # transposing the tibble created for recovered data
-head(new_recov)  # checking to see the transposed tibble
+#head(new_recov)  # checking to see the transposed tibble
 ```
 
 
@@ -139,7 +139,7 @@ class(new_recov)  # checking the class of the tibble created for recovered data
 ```
 
 ```{r}
-new_recov2 <- as.data.frame(new_recov)  # converting to data frame
+new_recov2 <- as.data.frame(new_recov)  # converting array values to data frame for further operation
 head(new_recov2)
 ```
 
@@ -171,9 +171,9 @@ head(recov_5)   # checking head to see the result
 ```
 
 ```{r}
-recov_6 <- recov_5 %>% select(location, everything())
+recov_6 <- recov_5 %>% select(location, everything()) #placing the location column in front of others
 recov_6
-recov_6$date <- as.Date(recov_6$date, format = "%Y.%m.%d")
+recov_6$date <- as.Date(recov_6$date, format = "%Y.%m.%d")  #converting date column from chr to date type
 head(recov_6)
 ```
 
@@ -186,22 +186,22 @@ Recovered.csv-Country,Date,Recovered
 
 ```{r}
 
-colnames(master_data) <- c("Code", "Country", "Continent", "Date", "NewCases", "NewDeaths")
-colnames(tests_info) <- c("Code", "Date", "NewTests")
-colnames(country_info) <- c("Code", "Country", "Population", "GDP", "GDPCapita")
-colnames(recov_6) <- c("Country", "Date", "Recovered")
+colnames(master_data) <- c("Code", "Country", "Continent", "Date", "NewCases", "NewDeaths") #changing names by using colnames 
+colnames(tests_info) <- c("Code", "Date", "NewTests")                            #changing names by using colnames
+colnames(country_info) <- c("Code", "Country", "Population", "GDP", "GDPCapita") #changing names by using colnames
+colnames(recov_6) <- c("Country", "Date", "Recovered")                           #changing names by using colnames
 
-head(master_data)
-head(tests_info)
-head(country_info)
-head(recov_6)
+head(master_data)  #checking head to see the result
+head(tests_info)   #checking head to see the result
+head(country_info) #checking head to see the result
+head(recov_6)      #checking head to see the result
 ```
 ### 4. Ensure that all dates variables are of date data type and with the same format across the dataframes.
 ```{r}
 class(master_data$Date)
 class(tests_info$Date)
 class(recov_6$Date) # date variable changed to Date type in question-2 above.
-# country_info data tibble doesnot have a Date variable. Rest in all data tibbles, the date variable is of Date type.
+# country_info data tibble does not have a Date variable. Rest in all data tibbles, the date variable is of Date type.
 ```
 
 ### 5. Considering the master dataframe is the one loaded from the “Covid19.csv” file, add new 5 variables to it from the other files (Recovered.csv, Tests.csv, Countries.csv). The 5 new added variables should be named (“Recovered”, “NewTests”, “Population”, “GDP”, “GDPCapita”) accordingly.
@@ -210,7 +210,7 @@ class(recov_6$Date) # date variable changed to Date type in question-2 above.
 # merging Recovered variable from the recov_6 dataframe. It has to be merged by using Date and Country column
 m1 <- merge(x = master_data, y = recov_6, all.x = TRUE, by = c("Date", "Country"))
 m1 <- m1 %>%
-  group_by(Country) %>%
+  group_by(Country) %>%  # grouping and arranging by country to keep country data together
   arrange(Country)
 head(m1)
 ```
@@ -219,7 +219,7 @@ head(m1)
 # merging NewTests variable from the tests_info dataframe. It has to be merged by using Date and Code column
 m2 <- merge(x = m1, y = tests_info, all.x = TRUE, by = c("Date", "Code"))
 m2 <- m2 %>%
-  group_by(Country) %>%
+  group_by(Country) %>%   # grouping and arranging by country to keep country data together
   arrange(Country)
 head(m2)
 ```
@@ -228,7 +228,7 @@ head(m2)
 # merging Population,GDP,GDPCapita variable from the country_info dataframe. It has to be merged by using Country and Code column
 master_df <- merge(x = m2, y = country_info, all.x = TRUE, by = c("Code", "Country"))
 master_df <- master_df %>%
-  group_by(Country) %>%
+  group_by(Country) %>%  # grouping and arranging by country to keep country data together
   arrange(Country)
 head(master_df)
 ```
