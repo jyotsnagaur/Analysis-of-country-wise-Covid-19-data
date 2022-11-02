@@ -732,7 +732,29 @@ RMSE(preds, actual)
 
 
 
+# ------------------------------------------------------------------------------- #
 
+## Task 4: Insights (8 marks)
+
+Imagine you have been asked to plan for a dashboard that shall show the trends and the main figures of the different Covid19 waves that happened world wide, so far. Given the current data in this assignment is only covering the first wave of the Covid19, how would you augment this data? What are the other sources of data that you will rely on? What types of figures will you be focusing on to show in your dashboard? and why?
+
+Write the report as follows:
+
+## Note: Please see attached dashboard image
+
+## Aim:-
+
+
+## 1. Objectives:
+  - Realtime augumented data
+
+## 2. List of data sources to augment the existing data:
+
+
+## 3. Set of figures/tables to show in the dashboard:
+
+
+## 4. Analysis strategy:
 
 
 
