@@ -89,85 +89,85 @@ The four CSV files are described in the following table:
 ### 1.Load and read the data from the CSV files and store them into dataframes named appropriately.
 
 ```{r}
-#install.packages("rlang")
+# install.packages("rlang")
 ```
 
 ```{r}
-
+# importing library tidyverse which contains all the other packages (dplyr, ggplot2, etc.) used here for data exploration and visualisation.
 library(tidyverse)
 
 
 master_data <- read_csv("C:/joy_R/IDS_Finalexam/data/Covid19.csv")
-head(master_data)
+head(master_data) # checking to see if a tibble is created
 tests_info <- read_csv("C:/joy_R/IDS_Finalexam/data/Tests.csv")
-head(tests_info)
+head(tests_info) # checking to see if a tibble is created
 country_info <- read_csv("C:/joy_R/IDS_Finalexam/data/Countries.csv")
-head(country_info)
+head(country_info) # checking to see if a tibble is created
 recov_info <- read_csv("C:/joy_R/IDS_Finalexam/data/Recovered.csv")
-head(recov_info)
+head(recov_info) # checking to see if a tibble is created
 ```
 
 ```{r}
-str(master_data)
-```
-
-
-```{r}
-str(tests_info)
+str(master_data) # checking the structure of tibble created
 ```
 
 
 ```{r}
-str(country_info)
+str(tests_info)  # checking the structure of tibble created
+```
+
+
+```{r}
+str(country_info)  # checking the structure of tibble created
 ```
 
 ```{r}
-str(recov_info)
+str(recov_info)  # checking the structure of tibble created
 ```
 
 
 ### 2.Tidy up the dataframe driven from the file “Recovered.csv” to be compatible with the dataframe driven from the file “Covid19.csv”, i.e., every observation should have a record of recovered patients in one country in a single day.
 
 ```{r}
-new_recov <- t(recov_info)
-# head(new_recov)
+new_recov <- t(recov_info)  # transposing the tibble created for recovered data
+head(new_recov)  # checking to see the transposed tibble
 ```
 
 
 ```{r}
-class(new_recov)
+class(new_recov)  # checking the class of the tibble created for recovered data
 ```
 
 ```{r}
-new_recov2 <- as.data.frame(new_recov)
+new_recov2 <- as.data.frame(new_recov)  # converting to data frame
 head(new_recov2)
 ```
 
 
 ```{r}
 colnames(new_recov2) <- c(new_recov2[1, ]) # assigning new column headers to each data frame in the list
-new_recov2
-new_recov3 <- new_recov2[-c(1), ]
-new_recov3
-new_recov3$date <- row.names(new_recov3)
+#new_recov2   # checking to see the result
+new_recov3 <- new_recov2[-c(1), ] # removing the repeating row names
+#new_recov3  # checking to see the result
+new_recov3$date <- row.names(new_recov3) # adding Date as the last column
 
 head(new_recov3)
 ```
-
+pivot_longer() is a function in tidyverse library. It converts data to long format, increasing the number of rows and decreasing the number of columns. 
 ```{r}
-new_recov4 <- pivot_longer(new_recov3,
-  cols = 1:185, names_to = "location",
-  values_to = "cases"
+new_recov4 <- pivot_longer(new_recov3, #converting data to long format using pivot_longer function
+  cols = 1:185, names_to = "location", #specifying column range and making all countries come into a single location column
+  values_to = "cases"                  #making all the values of recovered cases come under the cases column
 )
-head(new_recov4)
+head(new_recov4) #checking head to see the result
 ```
 
 
 ```{r}
 recov_5 <- new_recov4 %>%
-  group_by(location) %>%
+  group_by(location) %>%   # grouping and arranging data by location to arrange country data together
   arrange(location)
-head(recov_5)
+head(recov_5)   # checking head to see the result
 ```
 
 ```{r}
@@ -280,7 +280,7 @@ head(recov_6) # check the data frame
 
 ### 7. Using existing “Date” variable; add month and week variables to the master dataframe. [Hint: you may use functions from lubridate package]
 ```{r}
-#install.packages("lubridate")
+# install.packages("lubridate")
 library(lubridate)
 
 master_df2 <- master_df %>% mutate(Month = month(Date))
@@ -310,7 +310,9 @@ head(master_df4)
 
 ### 2.Add two new variables to the master dataframe (“Active”, “FatalityRate”). Active variable should reflect the infected cases that has not been closed yet (by either recovery or death), and it could be calculated from (CumCases – (CumDeaths + CumRecovered)). On the other hand, FatalityRate variable should reflect the percentages of death to the infected cases up to date and it could be calculated from (CumDeaths / CumCases).
 ```{r}
-master_df5 <- master_df4 %>% group_by(Country) %>% mutate(Active=(CumCases-(CumDeaths + CumRecovered)), FatalityRate=(CumDeaths / CumCases))
+master_df5 <- master_df4 %>%
+  group_by(Country) %>%
+  mutate(Active = (CumCases - (CumDeaths + CumRecovered)), FatalityRate = (CumDeaths / CumCases))
 head(master_df5)
 ```
 
@@ -318,20 +320,23 @@ head(master_df5)
 
 [Hint: Cases_1M_Pop = CumCases*(10^6) / Population)]
 ```{r}
-master_df6 <- master_df5 %>% group_by(Country) %>% mutate(Cases_1M_Pop=CumCases*(10^6) / Population, Deaths_1M_Pop=CumDeaths*(10^6) / Population, Recovered_1M_Pop=CumRecovered*(10^6) / Population, Tests_1M_Pop=CumTests*(10^6) / Population)
+master_df6 <- master_df5 %>%
+  group_by(Country) %>%
+  mutate(Cases_1M_Pop = CumCases * (10^6) / Population, Deaths_1M_Pop = CumDeaths * (10^6) / Population, Recovered_1M_Pop = CumRecovered * (10^6) / Population, Tests_1M_Pop = CumTests * (10^6) / Population)
 head(master_df6)
 ```
 
 ### 4.Find the day with the highest reported death toll across the world. Print the date and the death toll of that day.
 ```{r}
-deaths_per_day <- master_df6 %>% group_by(Date) %>% summarise(death_toll = sum(NewDeaths))
+deaths_per_day <- master_df6 %>%
+  group_by(Date) %>%
+  summarise(death_toll = sum(NewDeaths))
 
 
 highest_death_toll <- deaths_per_day[[which.max(deaths_per_day$death_toll), "death_toll"]]
 highest_death_toll
 highest_death_date <- deaths_per_day[[which.max(deaths_per_day$death_toll), "Date"]]
 highest_death_date
-
 ```
 
 ### 5.Build a graph to show how the cumulative data of (Infected Cases, Deaths, Recovered, Tests) change over the time for the whole world collectively.
@@ -340,11 +345,13 @@ highest_death_date
 
 ```{r}
 
-#Using summarise function to take sum of daily cases of different countries on each date
-master_df7 <- master_df6 %>% group_by(Date) %>% summarise(Cases_world=sum(NewCases), Deaths_world=sum(NewDeaths),Recovered_world=sum(Recovered), Tests_world=sum(NewTests))
+# Using summarise function to take sum of daily cases of different countries on each date
+master_df7 <- master_df6 %>%
+  group_by(Date) %>%
+  summarise(Cases_world = sum(NewCases), Deaths_world = sum(NewDeaths), Recovered_world = sum(Recovered), Tests_world = sum(NewTests))
 
 
-#to get the cumulative data of the above world variables I use cumsum function
+# to get the cumulative data of the above world variables I use cumsum function
 master_df7$Cases_world <- cumsum(master_df7$Cases_world)
 master_df7$Deaths_world <- cumsum(master_df7$Deaths_world)
 master_df7$Recovered_world <- cumsum(master_df7$Recovered_world)
@@ -374,9 +381,6 @@ p + scale_y_continuous(
   breaks = trans_breaks("log10", function(x) 10^x),
   labels = trans_format("log10", math_format(10^.x))
 )
-
-
-
 ```
 
 
@@ -396,30 +400,32 @@ lastDay_data
 
 
 ```{r}
-top10activeW <- head(arrange(lastDay_data, desc(Active)), n=10)
+top10activeW <- head(arrange(lastDay_data, desc(Active)), n = 10)
 top10activeW
 ```
 
 ```{r}
-top10casesW <- head(arrange(lastDay_data, desc(CumCases)), n=10)
+top10casesW <- head(arrange(lastDay_data, desc(CumCases)), n = 10)
 top10casesW
 ```
 
 ```{r}
-top10fatalityW<-head(arrange(lastDay_data, desc(FatalityRate)), n=10)
+top10fatalityW <- head(arrange(lastDay_data, desc(FatalityRate)), n = 10)
 top10fatalityW
 ```
 
 
 ```{r}
-top10testsMW<-head(arrange(lastDay_data, desc(Tests_1M_Pop)), n=10)
+top10testsMW <- head(arrange(lastDay_data, desc(Tests_1M_Pop)), n = 10)
 top10testsMW
 ```
 
 ### 8.Based on the data of the last day, print the up to date confirmed, death, recovered cases as well as the tests for every continent
 
 ```{r}
-continent_data <- lastDay_data %>% group_by(Continent) %>% summarise(case_con=sum(CumCases), death_con=sum(CumDeaths), recov_con=sum(CumRecovered), test_con=sum(CumTests))
+continent_data <- lastDay_data %>%
+  group_by(Continent) %>%
+  summarise(case_con = sum(CumCases), death_con = sum(CumDeaths), recov_con = sum(CumRecovered), test_con = sum(CumTests))
 
 continent_data
 ```
@@ -431,14 +437,13 @@ continent_data
 
 
 ```{r}
-#preparing data to plot
+# preparing data to plot
 
 coun <- top10casesW$Code
 
 CumCases_with_time <- master_df6 %>% filter(Code %in% coun)
 
 head(CumCases_with_time)
-
 ```
 
 
@@ -447,7 +452,7 @@ head(CumCases_with_time)
 # plotting
 library(ggplot2)
 p <- ggplot(CumCases_with_time, aes(x = Date)) +
-  geom_line(aes(y = CumCases, color=Country)) +
+  geom_line(aes(y = CumCases, color = Country)) +
   xlab("Date") +
   ylab("Exponential values of total cases") +
   ggtitle("Total number of cases over the time for the top 10 countries")
@@ -461,7 +466,6 @@ p + scale_y_continuous(
   breaks = trans_breaks("log10", function(x) 10^x),
   labels = trans_format("log10", math_format(10^.x))
 )
-
 ```
 
 ### 10. Build a graph for the top 10 countries with current highest active cases which was obtained previously in question 7. The graph should have one subgraph (i.e., using facet function) for each of these countries, every subgraph should show how the new cases, new deaths, and new recovered cases were changing over the time (Use log for Y axis for better presentation, Use different colour to distinguish between new cases, deaths, and recovered).
@@ -469,7 +473,7 @@ p + scale_y_continuous(
 [hint: geom_line function with date on x_axis and each of the values of the variables in y_axis]
 
 ```{r}
-#preparing data to plot
+# preparing data to plot
 
 coun2 <- top10activeW$Code
 
@@ -481,19 +485,19 @@ head(Active_with_time)
 
 
 ```{r fig.align="center", echo = FALSE,fig.width = 15}
-#plotting
-p = ggplot(data = Active_with_time, aes(x = Date, color=y)) +
-  geom_line(aes(y = NewCases, color="New Cases"))+
-  geom_line(aes(y = NewDeaths, color="New Deaths"))+
-  geom_line(aes(y = Recovered, color="Recovered"))+
+# plotting
+p <- ggplot(data = Active_with_time, aes(x = Date, color = y)) +
+  geom_line(aes(y = NewCases, color = "New Cases")) +
+  geom_line(aes(y = NewDeaths, color = "New Deaths")) +
+  geom_line(aes(y = Recovered, color = "Recovered")) +
   xlab("Month") +
   ylab("Exponential values of total cases") +
   ggtitle("Daily new cases,recovered cases and deaths in top 10 countries with current highest active cases")
 
 
 
-#facet wrap for subgraph according to country
-q= p + facet_wrap(~ Country)+labs(color="Daily New Cases")
+# facet wrap for subgraph according to country
+q <- p + facet_wrap(~Country) + labs(color = "Daily New Cases")
 
 # Possible values for trans : 'log2', 'log10'
 
@@ -504,7 +508,6 @@ q + scale_y_continuous(
   breaks = trans_breaks("log10", function(x) 10^x),
   labels = trans_format("log10", math_format(10^.x))
 )
-
 ```
 
 ### 11. Build a graph for the top 10 countries with current highest total tests per one million of the population which was obtained previously in question 7. This graph should present total number of infected cases, total tests so far, and the total tests per million of the population for each country.
@@ -513,42 +516,48 @@ q + scale_y_continuous(
 
 
 ```{r}
-#Preparing the data
+# Preparing the data
 coun3 <- top10testsMW$Code
 
 Test_with_time <- master_df6 %>% filter(Code %in% coun3)
 
-head(Test_with_time) 
-
-
+head(Test_with_time)
 ```
 
 
 ```{r}
-test_country_detail <- Test_with_time %>% group_by(Country) %>% summarise(infected_total=max(CumCases), total_tests=max(CumTests), total_test_per_million=max(Tests_1M_Pop))
+test_country_detail <- Test_with_time %>%
+  group_by(Country) %>%
+  summarise(infected_total = max(CumCases), total_tests = max(CumTests), total_test_per_million = max(Tests_1M_Pop))
 
 test_country_detail
 ```
 
 ```{r}
-plot_covid_test <-test_country_detail %>% pivot_longer(cols = c(infected_total, total_tests, total_test_per_million),
-                           names_to = "Test_Detail")
-plot_covid_test 
+plot_covid_test <- test_country_detail %>% pivot_longer(
+  cols = c(infected_total, total_tests, total_test_per_million),
+  names_to = "Test_Detail"
+)
+plot_covid_test
 ```
 
 ```{r}
-#plotting the data
+# plotting the data
 
-p3 = ggplot(plot_covid_test,aes(x = Country, 
-                     y = value, 
-                     col = Test_Detail, 
-                     group = Test_Detail,
-                     fill= Test_Detail)) +
-  geom_bar(position="dodge", stat = "identity") +
-  #To set x axis labels as vertical 
-  theme(axis.text.x = element_text(angle = 90, 
-                             hjust = 1,
-                             vjust = 0.5))
+p3 <- ggplot(plot_covid_test, aes(
+  x = Country,
+  y = value,
+  col = Test_Detail,
+  group = Test_Detail,
+  fill = Test_Detail
+)) +
+  geom_bar(position = "dodge", stat = "identity") +
+  # To set x axis labels as vertical
+  theme(axis.text.x = element_text(
+    angle = 90,
+    hjust = 1,
+    vjust = 0.5
+  ))
 
 # Format y axis tick mark labels to show exponents
 require(scales)
@@ -562,25 +571,31 @@ p3 + scale_y_continuous(
 
 
 ```{r}
-c_plot <- continent_data%>% pivot_longer(cols = c(case_con, death_con, recov_con,test_con),
-                           names_to = "Confirmed_Data")
-c_plot 
+c_plot <- continent_data %>% pivot_longer(
+  cols = c(case_con, death_con, recov_con, test_con),
+  names_to = "Confirmed_Data"
+)
+c_plot
 ```
 
 ```{r}
-#plotting the data
+# plotting the data
 
-#library(gghighlight)
-p4 = ggplot(c_plot,aes(x = Continent, 
-                     y = value, 
-                     col = Confirmed_Data, 
-                     group = Continent,
-                     fill= Continent, alpha=0.9)) +
-  geom_bar(stat = "identity", position = 'dodge') +
-  #To set x axis labels as vertical 
-  theme(axis.text.x = element_text(angle = 90, 
-                             hjust = 1,
-                             vjust = 0.5))
+# library(gghighlight)
+p4 <- ggplot(c_plot, aes(
+  x = Continent,
+  y = value,
+  col = Confirmed_Data,
+  group = Continent,
+  fill = Continent, alpha = 0.9
+)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  # To set x axis labels as vertical
+  theme(axis.text.x = element_text(
+    angle = 90,
+    hjust = 1,
+    vjust = 0.5
+  ))
 
 # Format y axis tick mark labels to show exponents
 require(scales)
@@ -589,8 +604,6 @@ p4 + scale_y_continuous(
   breaks = trans_breaks("log10", function(x) 10^x),
   labels = trans_format("log10", math_format(10^.x))
 )
-
-
 ```
 
 # ------------------------------------------------------------------------------- #
@@ -603,8 +616,8 @@ p4 + scale_y_continuous(
 
 ```{r}
 library(tidyverse)
-c_data <-lastDay_data %>% select(CumCases, CumTests, Population, GDP, GDPCapita)
-cor_data<- c_data[-1]
+c_data <- lastDay_data %>% select(CumCases, CumTests, Population, GDP, GDPCapita)
+cor_data <- c_data[-1]
 cor_data
 ```
 ### 2. Compute the correlation matrix between the variables of the “cor_data” and visualise this correlation matrix
@@ -618,12 +631,12 @@ ggcorr(cor_data, label = TRUE, label_alpha = TRUE)
 
 ```{r}
 # show box plot to all of the variables to check the outliers
-meltData <- cor_data %>% 
+meltData <- cor_data %>%
   gather()
 
-p <- ggplot(meltData, aes(key, value)) 
- 
-p + geom_boxplot() + facet_wrap(~key, scale="free") # viewing sepaartely as the scale of the variables is different
+p <- ggplot(meltData, aes(key, value))
+
+p + geom_boxplot() + facet_wrap(~key, scale = "free") # viewing sepaartely as the scale of the variables is different
 ```
 
 ### 3. visualise the distribution of the cumulative cases in the cor_data with and without changing the scale of the x axis to log transformation.
@@ -631,18 +644,16 @@ p + geom_boxplot() + facet_wrap(~key, scale="free") # viewing sepaartely as the 
 [Hint: you can use the geom_histrogram function]
 ```{r}
 ggplot(cor_data, aes(CumCases)) +
-  geom_histogram(aes(y = ..density..), fill = "aquamarine3", bins =50) +xlim(c(0,1200000))#+ylim()#normalise data for y-axis
-  #geom_density(color = "red")+
-  
-  
-
+  geom_histogram(aes(y = ..density..), fill = "aquamarine3", bins = 50) +
+  xlim(c(0, 1200000)) #+ylim()#normalise data for y-axis
+# geom_density(color = "red")+
 ```
 
 ### 4. Divide the cor_data into training and testing, where training data represent 65% of the number of rows.
 
 ```{r}
 # split data into train and test
-#install.packages("caret")
+# install.packages("caret")
 library(caret)
 
 set.seed(2)
@@ -660,7 +671,7 @@ dim(test)
 
 ```{r}
 # build a linear regression model only between cumulative cases and GDP of the countries
-lmModel <- lm(CumCases ~ GDP , data = train)
+lmModel <- lm(CumCases ~ GDP, data = train)
 print(lmModel)
 
 # Validating Regression Coefficients and Models
@@ -668,15 +679,13 @@ summary(lmModel)
 
 # visualise the model
 plot(lmModel)
-
-
 ```
 
 
 ```{r}
 # predicting
 test$PredictedCumCases <- predict(lmModel, test)
-head(test[ , c("CumCases", "PredictedCumCases")])
+head(test[, c("CumCases", "PredictedCumCases")])
 
 # compute the residual mean square error (RMSE) as a way of evaluation
 actual <- test$CumCases
@@ -689,13 +698,11 @@ RMSE(preds, actual)
 
 ```{r}
 # build a linear model between the CumCases and all of the other variables
-lmModel1 <- lm(CumCases ~ . , data = train)
+lmModel1 <- lm(CumCases ~ ., data = train)
 print(lmModel1)
 
 # Validating Regression Coefficients and Models
 summary(lmModel1)
-
-
 ```
 
 
@@ -705,7 +712,7 @@ summary(lmModel1)
 ```{r}
 # predicting
 test$PredictedCumCases_1 <- predict(lmModel1, test)
-head(test[ , c("CumCases", "PredictedCumCases",  "PredictedCumCases_1")])
+head(test[, c("CumCases", "PredictedCumCases", "PredictedCumCases_1")])
 
 # RMSE
 actual <- test$CumCases
@@ -759,6 +766,7 @@ Write the report as follows:
   - Australian Govt, Dept of Health and Aged Care: https://www.health.gov.au/health-alerts/covid-19/case-numbers-and-statistics
   - WHO COVID-19 Research Database: who.int/emergencies/diseases/novel-coronavirus-2019/global-research-on-novel-coronavirus-2019-ncov
 
+
 ## 3. Set of figures/tables to show in the dashboard:
   - Zoomable world map showing infected cases in each country(shinydashboard can  be done by using leaflet in R)
   - Side bar Panel with cases highlights showing numbers of infected cases, deaths, recovered and tests count
@@ -780,27 +788,3 @@ Write the report as follows:
 
 
 # ----------------------------------------------------------------------------------------------------------- #
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
