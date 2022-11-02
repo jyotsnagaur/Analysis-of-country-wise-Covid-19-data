@@ -567,6 +567,7 @@ p3 + scale_y_continuous(
   labels = trans_format("log10", math_format(10^.x))
 )
 ```
+
 ### 12.Build a graph to present the statistics of all continents which was obtained previously in question 8 (Use log for Y axis for better presentation, Use Continent in the legend, make sure x-axis labels does not overlap). 
 
 
@@ -629,6 +630,8 @@ library(GGally)
 ggcorr(cor_data, label = TRUE, label_alpha = TRUE)
 ```
 
+Observation: The highest correlation is shown between CumCases and CumTests and CumCases and GDP which is 0.9. This means in our data the Cumulative cases are highly dependent on the GDP of the country. It also means that the total number of tests are dependent on the Cumulative infected Cases which is obvious since with increase in the number of tests the infected cases will increase.
+
 ```{r}
 # show box plot to all of the variables to check the out-liers
 meltData <- cor_data %>%
@@ -638,6 +641,8 @@ p <- ggplot(meltData, aes(key, value))
 
 p + geom_boxplot() + facet_wrap(~key, scale = "free") # viewing separately as the scale of the variables is different
 ```
+
+There are some outliers for each of the variables but that could be because of the population of the countries across the world varies drastically.
 
 ### 3. visualise the distribution of the cumulative cases in the cor_data with and without changing the scale of the x axis to log transformation.
 
@@ -654,6 +659,7 @@ ggplot(cor_data, aes(CumCases)) +
   scale_x_log10()
   
 ```
+
 Observation: The distribution looks more evenly spread out when we take the log values of x-axis as compared to its original values. Perhaps because taking the log reduces the magnitude of the value. Also the y-axis in first case shows the count of each range and the y-axis of second case shows the density of each case.
 
 ### 4. Divide the cor_data into training and testing, where training data represent 65% of the number of rows.
@@ -663,7 +669,7 @@ Observation: The distribution looks more evenly spread out when we take the log 
 # install.packages("caret")
 library(caret)
 
-
+set.seed(2) #setting the random state to avoid changing Prediction values everytime the model is run
 index <- createDataPartition(cor_data$CumCases, p = .65, list = FALSE)
 length(cor_data$CumCases)
 
@@ -687,7 +693,24 @@ summary(lmModel)
 # visualise the model
 plot(lmModel)
 ```
-Inference: The data is mostly concentrated and in a scatter formation on the graph. Perhaps it is not so suitable for a linear regression.The fitted line hardly touches some points so will have huge value of error.
+
+Inference from above graph: The data is mostly concentrated and in a scatter formation on the graph. Perhaps it is not so suitable for a linear regression.The fitted line hardly touches some points so will have huge value of error.
+
+```{r}
+ggplot(lmModel, aes(lmModel1$residuals)) +
+  geom_histogram(aes(y = ..density..), fill = "#C99800", bins= 50) +
+  geom_density(color = "blue")+
+  scale_x_log10()
+```
+
+A residual is a measure of how far away a point is vertically from the regression line. Simply, it is the error between a predicted value and the observed actual value.
+
+
+
+
+
+
+
 
 ```{r}
 # predicting
