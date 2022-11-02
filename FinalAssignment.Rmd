@@ -650,11 +650,11 @@ ggplot(cor_data, aes(CumCases)) +
 ```
 ```{r}
 ggplot(cor_data, aes(CumCases)) +
-  geom_histogram(aes(y = ..count..), fill = "aquamarine3", bins = 50, position ='jitter', na.rm=TRUE) +
-  
+  geom_histogram(aes(y = ..density..), fill = "aquamarine3", bins = 50, position ='jitter', na.rm=TRUE) +
+  scale_x_log10()
   
 ```
-
+The distribution looks more evenly spread out when we take the log values of x-axis as compared to its original values.
 
 
 
