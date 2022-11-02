@@ -714,6 +714,40 @@ preds <- test$PredictedCumCases_1
 RMSE(preds, actual)
 ```
 
+### 7. Interpret the two models and write a small report of highlighting the differences between using the two models. For example, in which cases we should use the first model and in which cases the second one is better to use.
+
+-  Linear regression is used to predict the value of a continuous variable Y based on one or more input predictor variables X. 
+-  Here in above 2 cases the X variable is the cumulative cases(explanatory variable) and y is the predictor/response variable. 
+-  The predictor variable can be 1 variable which means that the value of CumCases only depends on that one variable
+-  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
