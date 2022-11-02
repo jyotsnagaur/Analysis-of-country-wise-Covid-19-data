@@ -614,7 +614,7 @@ p4 + scale_y_continuous(
 )
 ```
 
-Observation from above graph:
+Observation from above graph:The stacked graph shows the confirmed cases in each of the continents. Europe had the most number of confirmed infected cases followed by North America, Asia, South America, Oceania and Africa.
 
 
 # ------------------------------------------------------------------------------- #
