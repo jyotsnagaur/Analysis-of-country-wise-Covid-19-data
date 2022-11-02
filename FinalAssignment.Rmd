@@ -172,7 +172,7 @@ head(recov_5)   # checking head to see the result
 
 ```{r}
 recov_6 <- recov_5 %>% select(location, everything()) #placing the location column in front of others
-recov_6
+#recov_6
 recov_6$date <- as.Date(recov_6$date, format = "%Y.%m.%d")  #converting date column from chr to date type
 head(recov_6)
 ```
@@ -279,16 +279,18 @@ head(recov_6) # check the data frame
 ```
 
 ### 7. Using existing “Date” variable; add month and week variables to the master dataframe. [Hint: you may use functions from lubridate package]
+
+Lubridate is a package in tidyverse. It also expands the type of mathematical operations that can be performed with date-time objects. It introduces new time span classes as well like period,duration,interval,etc.
 ```{r}
 # install.packages("lubridate")
 library(lubridate)
 
-master_df2 <- master_df %>% mutate(Month = month(Date))
+master_df2 <- master_df %>% mutate(Month = month(Date)) #adding month column using lubridate
 head(master_df2)
 ```
 
 ```{r}
-master_df3 <- master_df2 %>% mutate(Week = week(Date))
+master_df3 <- master_df2 %>% mutate(Week = week(Date)) #adding week column using lubridate
 head(master_df3)
 ```
 
@@ -312,8 +314,8 @@ head(master_df4)
 ```{r}
 master_df5 <- master_df4 %>%
   group_by(Country) %>%
-  mutate(Active = (CumCases - (CumDeaths + CumRecovered)), FatalityRate = (CumDeaths / CumCases))
-head(master_df5)
+  mutate(Active = (CumCases - (CumDeaths + CumRecovered)), FatalityRate = (CumDeaths / CumCases)) #using mutate to add new columns
+head(master_df5) #checking head to see the result
 ```
 
 ### 3. Add four new variables to the master dataframe (“Cases_1M_Pop”, “Deaths_1M_Pop”, “Recovered_1M_Pop”, “Tests_1M_Pop”) These variables should reflect the cumulative relevant rate per one million of the corresponding country population, (i.e Cases_1M_Pop for country “X” at Date “Y” should reflect the total number of new cases up to date “Y” per million people of country “X” population)
@@ -322,18 +324,18 @@ head(master_df5)
 ```{r}
 master_df6 <- master_df5 %>%
   group_by(Country) %>%
-  mutate(Cases_1M_Pop = CumCases * (10^6) / Population, Deaths_1M_Pop = CumDeaths * (10^6) / Population, Recovered_1M_Pop = CumRecovered * (10^6) / Population, Tests_1M_Pop = CumTests * (10^6) / Population)
-head(master_df6)
+  mutate(Cases_1M_Pop = CumCases * (10^6) / Population, Deaths_1M_Pop = CumDeaths * (10^6) / Population, Recovered_1M_Pop = CumRecovered * (10^6) / Population, Tests_1M_Pop = CumTests * (10^6) / Population) #using mutate to add new columns
+head(master_df6)  #checking head to see the result
 ```
 
 ### 4.Find the day with the highest reported death toll across the world. Print the date and the death toll of that day.
 ```{r}
 deaths_per_day <- master_df6 %>%
   group_by(Date) %>%
-  summarise(death_toll = sum(NewDeaths))
+  summarise(death_toll = sum(NewDeaths)) #grouping by date and summarising death toll using sum of daily deaths
 
-
-highest_death_toll <- deaths_per_day[[which.max(deaths_per_day$death_toll), "death_toll"]]
+#using which.max to find the row with highest number in death toll column and then printing its date and value
+highest_death_toll <- deaths_per_day[[which.max(deaths_per_day$death_toll), "death_toll"]] 
 highest_death_toll
 highest_death_date <- deaths_per_day[[which.max(deaths_per_day$death_toll), "Date"]]
 highest_death_date
