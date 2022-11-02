@@ -736,12 +736,12 @@ RMSE(preds, actual)
 
 
 -  In the <b>first Linear Regression model</b> we built, we were assuming that the future value of cumulative cases only depended on the GDP of that country. According to our assumption: The Cumulative Cases and GDP have a linear relationship with each other and that is why we are selecting a linear regression model for prediction values. 
--  The Root Mean Square Error of 1st model was 76591.77. This is a very high value of error and proves that the model is inaccurate or the variables need to be changed into log values to extract a linear relationship.
+-  The Root Mean Square Error of 1st model was 30908. This is a very high value of error and proves that the model is inaccurate or the variables need to be changed into log values to extract a linear relationship.
 -  The model 1 can be used in cases where we are sure that the Cumulative cases only depend on the GDP of that country and has no relationship/effect from the others.It can be used where limited information and only one response variable is available or where we are absolutely sure that the value of cumulative cases depends on only the GDP.The distribution of data points should be linear on the scatter plot.
 
 
 -  In the <b>second Linear Regression model</b> we built, we were assuming that the future value of cumulative cases depended on all other variables such as the GDP of that country, GDP per capita, Population, Cumulative Tests of that country. According to our assumption: The Cumulative Cases and all other variables have a linear relationship with each other and that is why we are selecting a linear regression model. 
--  The Root Mean Square Error of 2nd model was 44927.77. This is a very high value of error and proves that the model is inaccurate or the variables need to be changed into log values to extract a linear relationship.
+-  The Root Mean Square Error of 2nd model was 24775.91. This is a very high value of error and proves that the model is inaccurate or the variables need to be changed into log values to extract a linear relationship.
 -  The model 2 is better than model 1 because it has comparatively less error. It can be used in cases where all the data is available and we have more variables that determine the future value of Cumulative Cases.
 
 
