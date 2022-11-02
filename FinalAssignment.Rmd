@@ -1,5 +1,5 @@
 ---
-title: "FinalAssignment"
+title: "Introduction to Data Science: FinalAssignment"
 author: "JYOTSNA"
 date: "2022-10-18"
 output: html_document
@@ -122,7 +122,7 @@ str(country_info)  # checking the structure of tibble created
 ```
 
 ```{r}
-str(recov_info)  # checking the structure of tibble created
+#str(recov_info)  # checking the structure of tibble created
 ```
 
 
@@ -130,7 +130,7 @@ str(recov_info)  # checking the structure of tibble created
 
 ```{r}
 new_recov <- t(recov_info)  # transposing the tibble created for recovered data
-#head(new_recov)  # checking to see the transposed tibble
+# head(new_recov)  # checking to see the transposed tibble
 ```
 
 
@@ -140,7 +140,7 @@ class(new_recov)  # checking the class of the tibble created for recovered data
 
 ```{r}
 new_recov2 <- as.data.frame(new_recov)  # converting array values to data frame for further operation
-head(new_recov2)
+# head(new_recov2)
 ```
 
 
@@ -151,7 +151,7 @@ new_recov3 <- new_recov2[-c(1), ] # removing the repeating row names
 #new_recov3  # checking to see the result
 new_recov3$date <- row.names(new_recov3) # adding Date as the last column
 
-head(new_recov3)
+# head(new_recov3) # checking to see the result
 ```
 pivot_longer() is a function in tidyverse library. It converts data to long format, increasing the number of rows and decreasing the number of columns. 
 ```{r}
@@ -385,7 +385,7 @@ p + scale_y_continuous(
 )
 ```
 
-Observation from above graph: The total cases(green) have increased exponentially over the time of 5 months. The number of tests(grey) have also increased which result in pointing towards whether the cases are infected or asymptomatic. The blue line is the recovered cases which follows a similar trend as the infected cases showing a direct co-dependence between the two. The deaths are shown in red which was actually more than the recovered cases during Jan to Feb and slowly afterwards the number of deaths became lower than number of recoveries after Feb. 
+<b>Observation from above graph: The total cases(green) have increased exponentially over the time of 5 months. The number of tests(grey) have also increased which result in pointing towards whether the cases are infected or asymptomatic. The blue line is the recovered cases which follows a similar trend as the infected cases showing a direct co-dependence between the two. The deaths are shown in red which was actually more than the recovered cases during Jan to Feb and slowly afterwards the number of deaths became lower than number of recoveries after Feb.</b> 
 
 
 ### 6.Extract the data corresonding to the last day (05/05/2020) and save it in a separate dataframe and name it “lastDay_data”.
@@ -470,7 +470,7 @@ p + scale_y_continuous(
 )
 ```
 
-Observation from above graph: The UK has shown the most number of total cases on the last day as compared to all other countries.Turkey hasn't experienced/reported cases before March 2020. The infected cases for all the countries has peaked exponentially from Feb on wards.
+<b>Observation from above graph: The UK has shown the most number of total cases on the last day as compared to all other countries.Turkey hasn't experienced/reported cases before March 2020. The infected cases for all the countries has peaked exponentially from Feb on wards.</b>
 
 ### 10. Build a graph for the top 10 countries with current highest active cases which was obtained previously in question 7. The graph should have one subgraph (i.e., using facet function) for each of these countries, every subgraph should show how the new cases, new deaths, and new recovered cases were changing over the time (Use log for Y axis for better presentation, Use different colour to distinguish between new cases, deaths, and recovered).
 
@@ -512,7 +512,7 @@ q + scale_y_continuous(
 )
 ```
 
-Observation from above graph:The US has shown the maximum increase in total cases towards the last days.In all countries, the graphs have progressed exponentially since Mar 2020.
+<b>Observation from above graph: The US has shown the maximum increase in total cases towards the last days.In all countries, the graphs have progressed exponentially since Mar 2020.</b>
 
 
 ### 11. Build a graph for the top 10 countries with current highest total tests per one million of the population which was obtained previously in question 7. This graph should present total number of infected cases, total tests so far, and the total tests per million of the population for each country.
@@ -573,7 +573,7 @@ p3 + scale_y_continuous(
 )
 ```
 
-Observation from above graph:Portugal had the most number of total tests and hence the most infected cases. The total test per million was highest in Iceland.
+<b>Observation from above graph: Portugal had the most number of total tests and hence the most infected cases. The total test per million was highest in Iceland.</b>
 
 ### 12.Build a graph to present the statistics of all continents which was obtained previously in question 8 (Use log for Y axis for better presentation, Use Continent in the legend, make sure x-axis labels does not overlap). 
 
@@ -614,7 +614,7 @@ p4 + scale_y_continuous(
 )
 ```
 
-Observation from above graph:The stacked graph shows the confirmed cases in each of the continents. Europe had the most number of confirmed infected cases followed by North America, Asia, South America, Oceania and Africa.
+<b>Observation from above graph: The stacked graph shows the confirmed cases in each of the continents. Europe had the most number of confirmed infected cases followed by North America, Asia, South America, Oceania and Africa.</b>
 
 
 # ------------------------------------------------------------------------------- #
@@ -640,7 +640,7 @@ library(GGally)
 ggcorr(cor_data, label = TRUE, label_alpha = TRUE)
 ```
 
-Observation: The highest correlation is shown between CumCases with CumTests and CumCases with GDP which is 0.9. This means in our data the Cumulative cases are highly dependent on the GDP of the country. It also means that the total number of tests are dependent on the Cumulative infected Cases which is obvious since with increase in the number of tests the infected cases will increase.
+<b>Observation: The highest correlation is shown between CumCases with CumTests and CumCases with GDP which is 0.9. This means in our data the Cumulative cases are highly dependent on the GDP of the country. It also means that the total number of tests are dependent on the Cumulative infected Cases which is obvious since with increase in the number of tests the infected cases will increase.</b>
 
 ```{r}
 # show box plot to all of the variables to check the out-liers
@@ -652,7 +652,7 @@ p <- ggplot(meltData, aes(key, value))
 p + geom_boxplot() + facet_wrap(~key, scale = "free") # viewing separately as the scale of the variables is different
 ```
 
-There are some outliers for each of the variables but that could be because of the population of the countries across the world varies drastically.
+<b>There are some outliers for each of the variables but that could be because of the population of the countries across the world varies drastically.</b>
 
 ### 3. visualise the distribution of the cumulative cases in the cor_data with and without changing the scale of the x axis to log transformation.
 
@@ -670,7 +670,7 @@ ggplot(cor_data, aes(CumCases)) +
   
 ```
 
-Observation: The distribution looks more evenly spread out when we take the log values of x-axis as compared to its original values. Perhaps because taking the log reduces the magnitude of the value. Also the y-axis in first case shows the count of each range and the y-axis of second case shows the density of each case.
+<b>Observation: The distribution looks more evenly spread out when we take the log values of x-axis as compared to its original values. Perhaps because taking the log reduces the magnitude of the value. Also the y-axis in first case shows the count of each range and the y-axis of second case shows the density of each case.</b>
 
 ### 4. Divide the cor_data into training and testing, where training data represent 65% of the number of rows.
 
@@ -704,16 +704,17 @@ summary(lmModel)
 plot(lmModel)
 ```
 
-Inference from above graph: The data is mostly concentrated and in a scatter formation on the graph. Perhaps it is not so suitable for a linear regression.The fitted line hardly touches some points so will have huge value of error.
+<b>Inference from above graph: The data is mostly concentrated and in a scatter formation on the graph. Perhaps it is not so suitable for a linear regression.The fitted line hardly touches some points so will have huge value of error.</b>
 
 ```{r}
-ggplot(lmModel, aes(lmModel1$residuals)) +
+#visualise the residuals
+ggplot(lmModel, aes(lmModel$residuals)) +
   geom_histogram(aes(y = ..density..), fill = "#C99800", bins= 50) +
   geom_density(color = "blue")+
   scale_x_log10()
 ```
 
-Observation from above graph: A residual is a measure of how far away a point is vertically from the regression line. Simply, it is the error between a predicted value and the observed actual value.It follows the highest distribution towards the mean residual length.
+<b>Observation from above graph: A residual is a measure of how far away a point is vertically from the regression line. Simply, it is the error between a predicted value and the observed actual value.It follows the highest distribution towards the mean residual length. For the maximum number of observations the residual density is very high which shows that model has high variance.</b>
 
 
 ```{r}
@@ -739,8 +740,15 @@ print(lmModel1)
 summary(lmModel1)
 ```
 
+```{r}
+#visualise the residuals
+ggplot(lmModel1, aes(lmModel1$residuals)) +
+  geom_histogram(aes(y = ..density..), fill = "#C99800", bins= 50) +
+  geom_density(color = "blue")+
+  scale_x_log10()
+```
 
-
+<b>Observation from above graph: A residual is a measure of how far away a point is vertically from the regression line. Simply, it is the error between a predicted value and the observed actual value. For the maximum number of observations the residual density is varying and spread evenly.This indicates that this model has a high variance but is better than the first model at making prediction because its bias is low as compared to the first model.</b>
 
 
 ```{r}
