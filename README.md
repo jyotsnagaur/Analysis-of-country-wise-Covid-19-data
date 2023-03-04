@@ -1,2 +1,4 @@
 # IDS_Finalexam
-Finalexam due 2 Nov
+Data Analysis for country-wise Covid-19 data using R
+
+
